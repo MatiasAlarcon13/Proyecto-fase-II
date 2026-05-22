@@ -2,16 +2,17 @@ package laboratorio;
 
 public abstract class Usuario {
     protected String nombre;
-    protected String dni;
+    protected int dni;
     protected String correo;
+    protected String rol;
 
-    public Usuario(String nombre, String dni, String correo) {
+    public Usuario(String nombre, int dni, String correo) {
         this.nombre = nombre;
         this.dni = dni;
         this.correo = correo;
     }
 
-    public abstract boolean puedeImprimir();
+    public abstract void asignarCuota();
 
     public String getNombre() {
         return nombre;
@@ -20,12 +21,10 @@ public abstract class Usuario {
         this.nombre = nombre;
     }
 
-    public String getDni() {
+    public int getDni() {
         return dni;
     }
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
+    public void setDni(int dni) {this.dni = dni;}
 
     public String getCorreo() {
         return correo;
@@ -33,4 +32,7 @@ public abstract class Usuario {
     public void setCorreo(String correo) {
         this.correo = correo;
     }
+
+    public String getRol() {return rol;}
+    public void setRol(String rol) {this.rol = rol;}
 }
