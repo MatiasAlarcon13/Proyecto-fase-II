@@ -25,7 +25,6 @@ public class Alumno extends Usuario {
     }
 
 
-
     public Alumno(String nombre, int dni, String correo, double  cuotaMax) {
         super(nombre, dni, correo);
         this.cuotaMax = cuotaMax;
@@ -36,6 +35,8 @@ public class Alumno extends Usuario {
         if (cuotaDisponible > 0){
             descontarCuota = solicitud.getGramosRequeridos();
             cuotaDisponible -= descontarCuota;
+        } else {
+            System.out.println("Limite alcanzado.");
         }
     }
 

@@ -12,8 +12,6 @@ public class SolicitudImpresion {
     private static Double velocidadImpresion = 40.0;
     private static int contadorImpresion = 1;
 
-
-
     public SolicitudImpresion(String nombreArchivo, double tiempoEstimado, double gramosRequeridos, Usuario usuario) {
         this.nombreArchivo = nombreArchivo;
         this.tiempoEstimado = tiempoEstimado;
@@ -61,19 +59,17 @@ public class SolicitudImpresion {
                 return null;
         }
 
-        //asignar cuota segun el rol
-        usuario.puedeImprimir();
-
+        usuario.asignarCuota();
         // cuota suficiente?
-        if (!persona.tieneCuotaDisponible(gramosRequeridos)){
-            System.out.println("Cuota insuficiente | Disponible: "+persona.getCuota()+ "g. | Requerido: "+gramosRequeridos+"g");
+        if (!usuario.tieneCuotaDisponible(gramosRequeridos)){
+            System.out.println("Cuota insuficiente | Disponible: "+usuario.getCuota()+ "g. | Requerido: "+gramosRequeridos+"g");
             System.out.println( );
             teclado. close();
             return null;
         }
         System.out.println("Tiempo estimado: " + tiempoEstimado + " horas.");
         System.out.println("Solicitando impresion...");
-        return new SolicitudImpresion(archivoNombre, tiempoEstimado, gramosRequeridos, persona);
+        return new SolicitudImpresion(archivoNombre, tiempoEstimado, gramosRequeridos, usuario);
     }
 
 
