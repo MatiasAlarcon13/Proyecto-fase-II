@@ -18,6 +18,8 @@ public abstract class Usuario {
 
     public abstract double getCuota();
 
+    public abstract String getRol();
+
 
 
     public String getNombre() {
@@ -39,7 +41,7 @@ public abstract class Usuario {
         this.correo = correo;
     }
 
-    public String getRol() {return rol;}
     public void setRol(String rol) {this.rol = rol;}
+
 
 }

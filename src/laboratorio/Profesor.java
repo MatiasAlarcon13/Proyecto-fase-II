@@ -4,10 +4,13 @@ public class Profesor extends Usuario {
     private Double cuotaDisponible;
 
     @Override
+    public String getRol() {
+        return "docente";
+    }
+    @Override
     public void asignarCuota() {
         cuotaDisponible = Double.MAX_VALUE;
     }
-
     @Override
     public boolean tieneCuotaDisponible(double gramos) {
         return true;
@@ -17,6 +20,9 @@ public class Profesor extends Usuario {
     public double getCuota() {
         return cuotaDisponible;
     }
+
+
+
     public Profesor(String nombre, int dni, String correo, double cuotaDisponible) {
         super(nombre, dni, correo);
         this.cuotaDisponible = cuotaDisponible;

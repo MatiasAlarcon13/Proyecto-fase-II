@@ -6,6 +6,10 @@ public class Alumno extends Usuario {
     private double descontarCuota;
 
     @Override
+    public String getRol() {
+        return "estudiante";
+    }
+    @Override
     public void asignarCuota() {
         cuotaDisponible = cuotaMax;
     }
@@ -19,6 +23,8 @@ public class Alumno extends Usuario {
     public double getCuota() {
         return cuotaDisponible;
     }
+
+
 
     public Alumno(String nombre, int dni, String correo, double  cuotaMax) {
         super(nombre, dni, correo);
