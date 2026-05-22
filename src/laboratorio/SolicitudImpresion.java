@@ -2,13 +2,11 @@ package laboratorio;
 import java.util.Scanner;
 
 public class SolicitudImpresion {
-    private String nombreArchivo, titularSolicitud;
+    private String nombreArchivo, titularSolicitud, rol, correo;
     private int idImpresion, idImpresora, dni;
-    private String rol, correo;
     private String  fechaSolicitud;
     private Double gramosRequeridos;
     private Double tiempoEstimado = 0.0;
-
     private static Double velocidadImpresion = 40.0;
     private static int contadorImpresion = 1;
 
@@ -25,8 +23,7 @@ public class SolicitudImpresion {
     }
 
     //metodo estatico procesar (debe cumplir con todos los parametros para existir)
-    public static SolicitudImpresion procesarImpresion(Usuario usuario) {
-        Scanner teclado = new Scanner(System.in);
+    public static SolicitudImpresion procesarImpresion(Usuario usuario, Scanner teclado) {
         System.out.println("-----Solicitud de impresion-----");
         System.out.println("Seleccionar modelo de impresion-> Puente | Casa | Pelota");
         String archivoNombre = teclado.nextLine().trim().toLowerCase();//trim elimina espacios para que no rompa el switch
@@ -59,7 +56,6 @@ public class SolicitudImpresion {
                 return null;
         }
 
-        usuario.asignarCuota();
         // cuota suficiente?
         if (!usuario.tieneCuotaDisponible(gramosRequeridos)){
             System.out.println("Cuota insuficiente | Disponible: "+usuario.getCuota()+ "g. | Requerido: "+gramosRequeridos+"g");

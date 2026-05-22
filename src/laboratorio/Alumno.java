@@ -3,20 +3,19 @@ package laboratorio;
 public class Alumno extends Usuario {
     private double cuotaDisponible;
     private double cuotaMax = 500.00;
-    private double descontarCuota;
 
-    @Override
-    public String getRol() {
-        return "estudiante";
-    }
-    @Override
-    public void asignarCuota() {
+    public Alumno(String nombre, int dni, String correo, double cuotaMax) {
+        super(nombre, dni, correo);
+        this.cuotaMax = cuotaMax;
         cuotaDisponible = cuotaMax;
     }
 
     @Override
+    public String getRol() {return "estudiante";}
+
+    @Override
     public boolean tieneCuotaDisponible(double gramos) {
-        return cuotaDisponible >= gramos ;
+        return cuotaDisponible >= gramos;
     }
 
     @Override
@@ -24,19 +23,11 @@ public class Alumno extends Usuario {
         return cuotaDisponible;
     }
 
-
-    public Alumno(String nombre, int dni, String correo, double  cuotaMax) {
-        super(nombre, dni, correo);
-        this.cuotaMax = cuotaMax;
-    }
-
-
     public void calculoCuota(SolicitudImpresion solicitud) {
-        if (cuotaDisponible > 0){
-            descontarCuota = solicitud.getGramosRequeridos();
-            cuotaDisponible -= descontarCuota;
+        if (cuotaDisponible >= solicitud.getGramosRequeridos()) {
+            cuotaDisponible -= solicitud.getGramosRequeridos();
         } else {
-            System.out.println("Limite alcanzado.");
+            System.out.println("Limite de cuota alcanzado.");
         }
     }
 
@@ -46,6 +37,4 @@ public class Alumno extends Usuario {
     public double getCuotaMax() {return cuotaMax;}
     public void setCuotaMax(double cuotaMax) {this.cuotaMax = cuotaMax;}
 
-    public double getDescontarCuota() {return descontarCuota;}
-    public void setDescontarCuota(double descontarCuota) {this.descontarCuota = descontarCuota;}
 }
