@@ -10,10 +10,22 @@ public class Alumno extends Usuario {
         cuotaDisponible = cuotaMax;
     }
 
-    public Alumno(String nombre, int dni, String correo, int cuotaMax) {
+    @Override
+    public boolean tieneCuotaDisponible(double gramos) {
+        return cuotaDisponible >= gramos ;
+    }
+
+    @Override
+    public double getCuota() {
+        return cuotaDisponible;
+    }
+
+    public Alumno(String nombre, int dni, String correo, double  cuotaMax) {
         super(nombre, dni, correo);
         this.cuotaMax = cuotaMax;
     }
+
+
     public void calculoCuota(SolicitudImpresion solicitud) {
         if (cuotaDisponible > 0){
             descontarCuota = solicitud.getGramosRequeridos();

@@ -2,9 +2,9 @@ package laboratorio;
 
 public abstract class Usuario {
     protected String nombre;
-    protected int dni;
     protected String correo;
     protected String rol;
+    protected int dni;
 
     public Usuario(String nombre, int dni, String correo) {
         this.nombre = nombre;
@@ -13,6 +13,12 @@ public abstract class Usuario {
     }
 
     public abstract void asignarCuota();
+
+    public abstract boolean tieneCuotaDisponible(double gramos);
+
+    public abstract double getCuota();
+
+
 
     public String getNombre() {
         return nombre;
@@ -35,4 +41,5 @@ public abstract class Usuario {
 
     public String getRol() {return rol;}
     public void setRol(String rol) {this.rol = rol;}
+
 }
