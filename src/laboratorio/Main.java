@@ -1,13 +1,64 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-void main() {
-    //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-    // to see how IntelliJ IDEA suggests fixing it.
-    IO.println(String.format("Hello and welcome!"));
+import com.formdev.flatlaf.FlatLightLaf;
+import laboratorio.PantallaLogin;
+import laboratorio.VentanaSeleccion;
+import javax.swing.*;
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
+import java.io.File;
 
-    for (int i = 1; i <= 5; i++) {
-        //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-        // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-        IO.println("i = " + i);
+public class Main {
+    public static void main(String[] args) {
+
+        // 1. REGISTRAR LAS FUENTES EXTERNAS
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+
+        // Cargar fuente para el Título (MADE Waffle Soft)
+        try {
+            File archivoWaffle = new File("imagenes/MADE Waffle Soft PERSONAL USE.otf");
+            if (archivoWaffle.exists()) {
+                Font fuenteWaffle = Font.createFont(Font.TRUETYPE_FONT, archivoWaffle);
+                ge.registerFont(fuenteWaffle);
+                System.out.println("Fuente Título registrada: " + fuenteWaffle.getName());
+            } else {
+                System.err.println("No se encontró el archivo de la fuente Waffle.");
+            }
+        } catch (Exception e) {
+            System.err.println("Error al cargar fuente Waffle: " + e.getMessage());
+        }
+
+        // Cargar fuente para el Subtítulo (Baliw)
+        try {
+            File archivoBaliw = new File("imagenes/Baliw.ttf");
+            if (archivoBaliw.exists()) {
+                Font fuenteBaliw = Font.createFont(Font.TRUETYPE_FONT, archivoBaliw);
+                ge.registerFont(fuenteBaliw);
+                System.out.println("Fuente Subtítulo registrada: " + fuenteBaliw.getName());
+            } else {
+                System.err.println("No se encontró el archivo de la fuente Baliw.");
+            }
+        } catch (Exception e) {
+            System.err.println("Error al cargar fuente Baliw: " + e.getMessage());
+        }
+
+        // 2. INICIAR FLATLAF
+        try {
+            FlatLightLaf.setup();
+        } catch (Exception ex) {
+            System.err.println("Error al iniciar FlatLaf");
+        }
+
+        // 3. ABRIR LA VENTANA
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("Laboratory Maker - Inicio");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+            VentanaSeleccion pantallaSeleccion = new VentanaSeleccion();
+            frame.setContentPane(pantallaSeleccion.getPanelPrincipal());
+
+
+            frame.setSize(900, 650); // Tamaño grande predeterminado
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+        });
     }
 }

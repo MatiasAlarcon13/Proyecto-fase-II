@@ -1,4 +1,4 @@
-package laboratorio;
+/* package laboratorio;
 
 public class Auditoria {
     private int idRegistro;
@@ -6,3 +6,4 @@ public class Auditoria {
     private String Motivo;
     private String dniUsuario;
 }
+*/
