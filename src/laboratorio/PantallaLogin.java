@@ -1,4 +1,5 @@
 package laboratorio;
+
 import java.awt.Image;
 import java.io.File;
 import javax.swing.*;
@@ -15,7 +16,7 @@ public class PantallaLogin {
     private JButton atrasButton;
     private JButton ingresarButton;
 
-    public PantallaLogin() {
+    public PantallaLogin(String rolSeleccionado) {
         try {
             // Mapeamos las rutas con los nombres EXACTOS de tus archivos reales
             File rutaimgilustracion = new File("imagenes/logusser.png");
@@ -70,6 +71,22 @@ public class PantallaLogin {
 
                 // 3. Le volvemos a poner el PanelPrincipal del inicio a la ventana
                 frameActual.setContentPane(pantallaInicio.getPanelPrincipal());
+
+                // 4. Refrescamos la interfaz para que se redibuje al instante
+                frameActual.revalidate();
+                frameActual.repaint();
+            }
+        });
+
+        ingresarButton.addActionListener(e -> {
+            // 1. Buscamos el marco (JFrame) actual donde está metido este panel
+            JFrame frameActual = (JFrame) SwingUtilities.getWindowAncestor(panelLog);
+
+            if (frameActual != null) {
+                // 2. 2. Instanciamos directamente tu nueva pantalla de Alumn
+                PantallaInicioAlumno pantallaInicioALumno = new PantallaInicioAlumno();
+                // 2. Instanciamos directamente tu nueva pantalla de Alumno
+                frameActual.setContentPane(pantallaInicioALumno.getPanelALumno());
 
                 // 4. Refrescamos la interfaz para que se redibuje al instante
                 frameActual.revalidate();

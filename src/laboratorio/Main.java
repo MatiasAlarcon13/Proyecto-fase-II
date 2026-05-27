@@ -1,6 +1,6 @@
 import com.formdev.flatlaf.FlatLightLaf;
-import laboratorio.PantallaLogin;
 import laboratorio.VentanaSeleccion;
+
 import javax.swing.*;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;

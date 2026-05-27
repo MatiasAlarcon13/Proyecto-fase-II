@@ -19,7 +19,6 @@ public class VentanaSeleccion {
     private JLabel SelectAdd;
     private JLabel indicaciones;
 
-    // =============== REEMPLAZA TU CONSTRUCTOR CON ESTE ===============
     public VentanaSeleccion() {
         try {
             // Mapeamos las rutas con los nombres EXACTOS de tus archivos reales
@@ -103,16 +102,17 @@ public class VentanaSeleccion {
             System.err.println("Error al cambiar el tamaño de texto de los botones: " + e.getMessage());
         }
 
-        docente.addActionListener(e -> abrirPantallaLogin());
-        alumno.addActionListener(e -> abrirPantallaLogin());
+        docente.addActionListener(e -> abrirPantallaLogin("Docente"));
+        alumno.addActionListener(e -> abrirPantallaLogin("Alumno"));
         add.addActionListener(e -> abrirPantallaAdd());
+
     }
 
-    private void abrirPantallaLogin() {
+    private void abrirPantallaLogin(String rolSeleccionado) {
         JFrame frameActual = (JFrame) SwingUtilities.getWindowAncestor(PanelPrincipal);
 
         if (frameActual != null) {
-            PantallaLogin pantallaLogin = new PantallaLogin();
+            PantallaLogin pantallaLogin = new PantallaLogin(rolSeleccionado);
             frameActual.setContentPane(pantallaLogin.getPanelLog());
             frameActual.revalidate();
             frameActual.repaint();
