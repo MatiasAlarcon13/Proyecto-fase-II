@@ -1,7 +1,5 @@
 package laboratorio.Vistas;
 
-import laboratorio.PantallaInicioAlumno;
-
 import java.awt.Image;
 import java.io.File;
 import javax.swing.*;
@@ -86,9 +84,9 @@ public class PantallaLogin {
 
             if (frameActual != null) {
                 // 2. 2. Instanciamos directamente tu nueva pantalla de Alumn
-                PantallaInicioAlumno pantallaInicioALumno = new PantallaInicioAlumno();
+                PantallaInicioAlumnos pantallaInicioALumno = new PantallaInicioAlumnos();
                 // 2. Instanciamos directamente tu nueva pantalla de Alumno
-                frameActual.setContentPane(pantallaInicioALumno.getPanelALumno());
+                frameActual.setContentPane(pantallaInicioALumno.getPanelAlumno());
 
                 // 4. Refrescamos la interfaz para que se redibuje al instante
                 frameActual.revalidate();
