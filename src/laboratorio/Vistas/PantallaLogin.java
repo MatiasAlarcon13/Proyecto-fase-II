@@ -1,4 +1,6 @@
-package laboratorio;
+package laboratorio.Vistas;
+
+import laboratorio.PantallaInicioAlumno;
 
 import java.awt.Image;
 import java.io.File;
@@ -67,7 +69,7 @@ public class PantallaLogin {
 
             if (frameActual != null) {
                 // 2. Instanciamos la pantalla de selección original
-                laboratorio.VentanaSeleccion pantallaInicio = new laboratorio.VentanaSeleccion();
+                VentanaSeleccion pantallaInicio = new VentanaSeleccion();
 
                 // 3. Le volvemos a poner el PanelPrincipal del inicio a la ventana
                 frameActual.setContentPane(pantallaInicio.getPanelPrincipal());

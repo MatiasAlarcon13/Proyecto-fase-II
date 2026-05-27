@@ -1,4 +1,4 @@
-package laboratorio;
+package laboratorio.Vistas;
 
 public class PantallaDocente {
 }

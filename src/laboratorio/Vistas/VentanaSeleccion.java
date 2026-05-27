@@ -1,4 +1,5 @@
-package laboratorio;
+package laboratorio.Vistas;
+
 import java.awt.Image;    // <-- Para solucionar el error de 'Image'
 import java.io.File;      // <-- Para solucionar el error de 'File'
 import javax.swing.*;
