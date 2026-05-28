@@ -7,12 +7,9 @@ import java.io.File;
 public class PantallaInicioAlumnos {
 
     private JPanel PanelAlumno;
-    private JPanel contenedor;
-    private JTable table1;
-    private JPanel PanelDataUser;
     private JPanel PanelImpresion;
+    private JTable table1;
     private JPanel infoModelos;
-    private JPanel PanelModelos;
     private JLabel headerModelos;
     private JPanel modeloCasa;
     private JPanel modeloPuente;
@@ -34,9 +31,19 @@ public class PantallaInicioAlumnos {
     private JLabel totalCapasPe;
     private JLabel materialRequeridosPe;
     private JLabel tituloCasa;
-    private JPanel tituloPuente;
+    private JPanel panelPuente;
     private JLabel tituloPelota;
     private JButton btnNuevoArchivo;
+    private JButton btnBack;
+    private JLabel tituloPuente;
+    private JPanel panelCasa;
+    private JPanel panelPelota;
+    private JPanel PanelUsuario;
+    private JScrollPane scrollModelos;
+    private JPanel PanelBoton;
+    private JPanel PanelModelos;
+    private JPanel PanelIzq;
+    private JPanel PanelDer;
 
     public PantallaInicioAlumnos() {
         try {
@@ -77,6 +84,59 @@ public class PantallaInicioAlumnos {
         } catch (Exception e) {
             System.err.println("Error al cargar los íconos de usuario: " + e.getMessage());
         }
+
+        try {
+            // 1. Tomamos la fuente por defecto de FlatLaf para mantener la armonía
+            Font fuenteBase = usuarioNombre.getFont();
+
+            // 2. Creamos un estilo más grande (ej: tamaño 18) y en negrita (Font.BOLD)
+            Font fuentecuerpo = new Font(fuenteBase.getName(), Font.PLAIN, 16);
+            Font fuenteUsuario = new Font(fuenteBase.getName(), Font.BOLD, 12);
+            Font fuenteTitulos = new Font(fuenteBase.getName(), Font.BOLD, 18);
+
+
+            // 3. Se lo aplicamos a las dos etiquetas de texto
+            usuarioNombre.setFont(fuenteUsuario);
+            cuotaDisponible.setFont(fuenteUsuario);
+            cuota.setFont(fuenteUsuario);
+            nombre.setFont(fuenteUsuario);
+            btnNuevoArchivo.setFont(fuentecuerpo);
+            btnBack.setFont(fuentecuerpo);
+            headerModelos.setFont(fuenteTitulos);
+            tituloCasa.setFont(fuenteTitulos);
+            tituloPuente.setFont(fuenteTitulos);
+            tituloPelota.setFont(fuenteTitulos);
+            tiempoImpresionC.setFont(fuentecuerpo);
+            tiempoImpresionPe.setFont(fuentecuerpo);
+            tiempoImpresionPu.setFont(fuentecuerpo);
+            materialRequeridoC.setFont(fuentecuerpo);
+            materialRequeridoPu.setFont(fuentecuerpo);
+            materialRequeridosPe.setFont(fuentecuerpo);
+            totalCapasC.setFont(fuentecuerpo);
+            totalCapasPe.setFont(fuentecuerpo);
+            totalCapasPu.setFont(fuentecuerpo);
+
+        } catch (Exception e) {
+            System.err.println("Error al agrandar los textos del login: " + e.getMessage());
+        }
+
+        btnBack.addActionListener(e -> {
+            // 1. Buscamos el marco (JFrame) actual donde está metido este panel
+            // (Reemplazá "panelAddUser" por el nombre de tu Jpanel principal de esta pantalla)
+            JFrame frameActual = (JFrame) SwingUtilities.getWindowAncestor(PanelAlumno);
+
+            if (frameActual != null) {
+                // 2. Instanciamos la pantalla de selección original
+                VentanaSeleccion pantallaInicio = new VentanaSeleccion();
+
+                // 3. Le volvemos a poner el PanelPrincipal del inicio a la ventana
+                frameActual.setContentPane(pantallaInicio.getPanelPrincipal());
+
+                // 4. Refrescamos la interfaz para que se redibuje al instante
+                frameActual.revalidate();
+                frameActual.repaint();
+            }
+        });
 
         // Acá vas a poder programar lo que pasa cuando el alumno
         // quiera subir un "Nuevo Archivo" STL para imprimir.
