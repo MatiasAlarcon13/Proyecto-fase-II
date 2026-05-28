@@ -18,10 +18,28 @@ public class VentanaNuevoArchivo extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(btnSolicitar);
 
-        btnSolicitar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
+        btnSolicitar.addActionListener(e -> {
+            // 1. Usamos 'this' directamente ya que esta clase YA ES un JDialog (tu ventana padre)
+            JDialog ventanaPadre = this;
+
+            // 2. Creamos el SEGUNDO JDialog (el de éxito o carga completa)
+            JDialog dialogoExito = new JDialog(ventanaPadre, "Solicitud Exitosa", Dialog.ModalityType.APPLICATION_MODAL);
+
+            // 3. Instanciamos la vista del segundo cartel
+            VentanaConfirmacion ventanaExito = new VentanaConfirmacion();
+            dialogoExito.setContentPane(ventanaExito.getPanelConfirmacion());
+
+            // 4. Configuramos tamaño y posición del segundo cartel
+            dialogoExito.setResizable(false);
+            dialogoExito.setSize(350, 350);
+            dialogoExito.setLocationRelativeTo(ventanaPadre); // Lo centra perfecto arriba de este formulario
+
+            // [OPCIONAL] Si querés que el formulario de filamento se cierre automáticamente
+            // al presionar "Solicitar", descomentá la siguiente línea:
+            // dispose();
+
+            // 5. mostrar confirmacion
+            dialogoExito.setVisible(true);
         });
 
         buttonCancel.addActionListener(new ActionListener() {
