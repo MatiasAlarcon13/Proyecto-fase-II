@@ -141,9 +141,27 @@ public class PantallaInicioAlumnos {
         // Acá vas a poder programar lo que pasa cuando el alumno
         // quiera subir un "Nuevo Archivo" STL para imprimir.
         btnNuevoArchivo.addActionListener(e -> {
-            // Ejemplo: Abrir un selector de archivos de la compu
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.showOpenDialog(PanelAlumno);
+            JFrame frameActual = (JFrame) SwingUtilities.getWindowAncestor(PanelAlumno);
+
+            if (frameActual != null) {
+                // 2. Creamos el JDialog (Ventana emergente)
+                JDialog dialogo = new JDialog(frameActual, "Subir Nuevo Archivo", true); // 'true' la hace modal
+
+                // 3. Instanciamos tu diseño del formulario flotante
+                VentanaNuevoArchivo formFlotante = new VentanaNuevoArchivo();
+
+                // 4. Le metemos el panel de tu diseño adentro del diálogo emergente
+                dialogo.setContentPane(formFlotante.getPanelNuevoArchivo());
+
+                // 5. Configuraciones clave para que se vea impecable
+                dialogo.setResizable(false); // Evita que el alumno la deforme estirándola
+                dialogo.setSize(350, 400); // Ancho y Alto fijos
+                dialogo.setLocationRelativeTo(frameActual); // La clava perfectamente en el centro de la app
+
+
+                // 6. La hacemos visible
+                dialogo.setVisible(true);
+            }
         });
     }
     // El puente indispensable para que el JFrame lo pueda mostrar en pantalla
