@@ -1,5 +1,8 @@
 package laboratorio.Controladores;
 
+import jakarta.persistence.Entity;
+
+@Entity
 public class Profesor extends Usuario {
     private Double cuotaDisponible;
 
