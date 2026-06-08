@@ -1,5 +1,6 @@
 package modulos;
 import jakarta.persistence.EntityManager;
+import laboratorio.Controladores.Usuario;
 
 public class UsuarioTestDAO {
     //CREATE

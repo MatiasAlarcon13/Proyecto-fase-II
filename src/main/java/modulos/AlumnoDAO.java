@@ -13,7 +13,7 @@ public class AlumnoDAO {
     }
 
     //READ
-    public Alumno buscarPorDni(int dni){
+    public laboratorio.Controladores.Alumno buscarPorDni(int dni){
         Alumno alumno = null;
         EntityManager em = null;
         try {

@@ -75,7 +75,7 @@ public class PantallaAddUser {
 
             if (frameActual != null) {
                 // 2. Instanciamos la pantalla de selección original
-                VentanaSeleccion pantallaInicio = new VentanaSeleccion();
+                VentanaSeleccion.VentanaSeleccion pantallaInicio = new VentanaSeleccion.VentanaSeleccion();
 
                 // 3. Le volvemos a poner el PanelPrincipal del inicio a la ventana
                 frameActual.setContentPane(pantallaInicio.getPanelPrincipal());
@@ -90,4 +90,6 @@ public class PantallaAddUser {
     public JPanel getPanelAdd() {
         return PanelAdd;
     }
+
+
 }

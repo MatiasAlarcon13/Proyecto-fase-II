@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="laboratorio.Vistas.PantallaInicioAlumnos">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="laboratorio.Vistas.PantallaInicioAlumnos.PantallaInicioAlumnos">
   <grid id="27dc6" binding="PanelAlumno" layout-manager="GridBagLayout">
     <constraints>
       <xy x="27" y="36" width="945" height="584"/>

@@ -65,4 +65,6 @@ public class VentanaConfirmacion extends JDialog {
     public JPanel getPanelConfirmacion() {
         return PanelConfirmacion;
     }
-}
+
+    }
+

@@ -1,11 +1,12 @@
 package modulos;
 
 import laboratorio.Controladores.Alumno;
+import laboratorio.Controladores.Usuario;
 
 public class MainPrueba {
     public static void main(String[] args) {
 
-        UsuarioDAO dao = new UsuarioDAO();
+        UsuarioTestDAO dao = new UsuarioTestDAO();
 
         // Crear y guardar un usuario
         Usuario usuario= new Usuario();
