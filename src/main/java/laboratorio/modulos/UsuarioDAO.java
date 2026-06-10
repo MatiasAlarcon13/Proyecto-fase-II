@@ -1,31 +1,29 @@
 package laboratorio.modulos;
 import jakarta.persistence.EntityManager;
-import laboratorio.Modelos.Alumno;
+import laboratorio.Modelos.Usuario;
 
-public class AlumnoDAO {
-    //CREATE
-    public void guardar(Alumno alumno) {
+public class UsuarioDAO {
+    public void guardar(Usuario usuario) {
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager(); //inicia la transaccion
         em.getTransaction().begin(); //abrimos la bveda
-        em.persist(alumno); //guardamos el objeto
+        em.persist(usuario); //guardamos el objeto
         em.getTransaction().commit(); //sellamos la transaccion
         em.close();//cierra la conexion
     }
 
-    //READ
-    public laboratorio.Modelos.Alumno buscarPorDni(int dni){
-        Alumno alumno = null;
+    public laboratorio.Modelos.Usuario buscarPorDni(int dni){
+        Usuario usuario = null;
         EntityManager em = null;
         try {
             em = JPAUtil.getEntityManagerFactory().createEntityManager();
-            String jpql = "SELECT a FROM Alumno a WHERE a.dni = :dniConsultado";
-            alumno = em.createQuery(jpql, Alumno.class)
+            String jpql = "SELECT u FROM Usuario a WHERE u.dni = :dniConsultado";
+            usuario = em.createQuery(jpql, Usuario.class)
                     .setParameter("dniConsultado", dni)
                     .getSingleResult();
 
         }
         catch(jakarta.persistence.NoResultException e){
-            System.out.println("No se encontro ningun alumno con el DNI: " +dni);
+            System.out.println("No se encontro ningun usuario con el DNI: " +dni);
         }
         catch(Exception ex){
             System.out.println("Error en la consulta: " + ex.getMessage());
@@ -35,24 +33,20 @@ public class AlumnoDAO {
                 em.close();
             }
         }
-        return alumno;
+        return usuario;
     }
 
-    //UPDATE
-    public void actualizar(Alumno alumno) {
+    public void actualizar(Usuario usuario) {
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
         em.getTransaction().begin();
-        em.merge(alumno);
+        em.merge(usuario);
         em.getTransaction().commit();
         em.close();
     }
-
-    // DELETE
-   //try-catch
     public void eliminar(int dni) {
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
         em.getTransaction().begin();
-        Alumno usuario = em.find(Alumno.class, dni);
+        Usuario usuario = em.find(Usuario.class, dni);
         em.remove(usuario);
         em.getTransaction().commit();
         em.close();

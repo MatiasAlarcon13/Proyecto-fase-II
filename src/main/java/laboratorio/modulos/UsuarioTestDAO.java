@@ -1,10 +1,9 @@
 package laboratorio.modulos;
 import jakarta.persistence.EntityManager;
-import laboratorio.Controladores.Usuario;
 
 public class UsuarioTestDAO {
     //CREATE
-    public void guardar(Usuario usuario) {
+    public void guardar(UsuarioTest usuario) {
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager(); //inicia la transaccion
         em.getTransaction().begin(); //abrimos la bveda
         em.persist(usuario); //guardamos el objeto
@@ -13,15 +12,15 @@ public class UsuarioTestDAO {
     }
 
     //READ
-    public Usuario buscarPorDni(int dni){
+    public UsuarioTest buscarPorDni(int dni){
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
-        Usuario usuario = em.find(Usuario.class, dni );
+        UsuarioTest usuario = em.find(UsuarioTest.class, dni );
         em.close();
         return usuario;
     }
 
     //UPDATE
-    public void actualizar(Usuario usuario) {
+    public void actualizar(UsuarioTest usuario) {
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
         em.getTransaction().begin();
         em.merge(usuario);
@@ -33,7 +32,7 @@ public class UsuarioTestDAO {
     public void eliminar(int dni) {
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
         em.getTransaction().begin();
-        Usuario usuario = em.find(Usuario.class, dni);
+        UsuarioTest usuario = em.find(UsuarioTest.class, dni);
         em.remove(usuario);
         em.getTransaction().commit();
         em.close();

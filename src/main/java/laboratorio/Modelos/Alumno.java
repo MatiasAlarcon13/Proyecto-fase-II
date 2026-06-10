@@ -1,13 +1,26 @@
 package laboratorio.Modelos;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.PrimaryKeyJoinColumn;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "Alumno")
+@PrimaryKeyJoinColumn(name = "dni")
 public class Alumno extends Usuario {
+    @Column (name = "cuotaDisponible")
     private double cuotaDisponible;
+    @Column (name = "cuotaMax")
     private double cuotaMax = 500.00;
 
     public Alumno(String nombre, int dni, String correo, double cuotaMax) {
         super(nombre, dni, correo);
         this.cuotaMax = cuotaMax;
         this.cuotaDisponible = cuotaMax;
+    }
+    public Alumno(){
+        super();
     }
 
     @Override
