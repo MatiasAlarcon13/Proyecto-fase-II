@@ -17,6 +17,7 @@ public class PantallaInicioDocente {
     private JLabel nombreDocente;
     private JLabel cuota;
     private JPanel PanelTarjetasImpresion;
+    private JButton btnback;
 
 
     public PantallaInicioDocente(Usuario usuarioLogueado) {
@@ -81,6 +82,15 @@ public class PantallaInicioDocente {
         } catch (Exception e) {
             System.out.println("Error al cargar iconos en panel docente: "+e.getMessage());
         }
+        btnback.addActionListener(e -> {
+            JFrame actual = (JFrame)SwingUtilities.getWindowAncestor(PanelDocente);
+            if(actual != null){
+                VentanaSeleccion pantallaInicio = new VentanaSeleccion();
+                actual.setContentPane(pantallaInicio.getPanelPrincipal());
+                actual.revalidate();
+                actual.repaint();
+            }
+        });
     }
 
     public JPanel getPanelDocente() {

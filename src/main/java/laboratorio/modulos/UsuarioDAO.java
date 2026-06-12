@@ -14,7 +14,7 @@ public class UsuarioDAO {
 
     public Usuario verificarCredenciales(String dniIngresado, String passwordIngresada) {
         if (!dniIngresado.equals(passwordIngresada)) {
-            return null; 
+            return null;
         }
 
         EntityManager em = null;

@@ -87,7 +87,7 @@
             <properties>
               <background color="-2363905"/>
               <foreground color="-16777216"/>
-              <text value="Docente"/>
+              <text value="Usuario"/>
             </properties>
           </component>
           <component id="ac5da" class="javax.swing.JButton" binding="alumno">
