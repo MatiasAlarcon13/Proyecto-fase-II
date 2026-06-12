@@ -2,12 +2,14 @@
 <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.2">
     <persistence-unit name="MiUnidadPersistencia" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>modulos.Usuario</class>
+        <class>laboratorio.Modelos.Usuario</class>
+        <class>laboratorio.Modelos.Alumno</class>
+        <class>laboratorio.Modelos.Profesor</class>
         <!-- Agrega más clases de entidad aquí -->
         <properties>
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/laboratoriomaker"/>
-            <property name="jakarta.persistence.jdbc.user" value="root"/>
-            <property name="jakarta.persistence.jdbc.password" value="1234"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://b1unyworwu2a9l0rq4xq-mysql.services.clever-cloud.com:3306/b1unyworwu2a9l0rq4xq"/>
+            <property name="jakarta.persistence.jdbc.user" value="ugr429moeqhcp9xt"/>
+            <property name="jakarta.persistence.jdbc.password" value="cL83AngUJD7fysF0vo50"/>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
             <property name="hibernate.show_sql" value="true"/>

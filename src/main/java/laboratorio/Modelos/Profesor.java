@@ -7,6 +7,9 @@ public class Profesor extends Usuario {
         super(nombre, dni, correo);
         this.cuotaDisponible = cuotaDisponible;
     }
+    public Profesor(){
+
+    }
 
     @Override
     public String getRol() { return "docente"; }

@@ -6,35 +6,22 @@ import laboratorio.Modelos.Usuario;
 public class MainPrueba {
     public static void main(String[] args) {
 
-        UsuarioDAO dao = new UsuarioDAO();
+        AlumnoDAO dao = new AlumnoDAO();
+        // 1. Instanciamos directamente al Alumno (sin llaves abstractas)
+        Alumno alumno = new Alumno();
 
-        // Crear y guardar un usuario
-        Usuario usuario = new Usuario() {
-            @Override
-            public boolean tieneCuotaDisponible(double gramos) {
-                return false;
-            }
-            @Override
-            public double getCuota() {
-                return 0;
-            }
-            @Override
-            public String getRol() {
-                return "";
-            }
-        };
-        usuario.setDni(45456290);
-        usuario.setNombre("Mati");
-        usuario.setCorreo("mati@gmail.com");
+        // 2. Le cargamos los datos que hereda de Usuario
+        alumno.setDni(47213777);
+        alumno.setNombre("Leo");
+        alumno.setCorreo("leo@gmail.com");
 
-        Alumno alumno= new Alumno();
-        alumno.setCuotaDisponible(24);
+        // 3. Le cargamos los datos propios de Alumno
+        alumno.setCuotaDisponible(200);
         alumno.setCuotaMax(500);
 
-        dao.guardar(usuario);
-        System.out.println("✅ Guardado con ID: " + usuario.getDni());
+        // 4. Guardamos al alumno a través del DAO
         dao.guardar(alumno);
-        System.out.println("Se guardo datos");
+        System.out.println("✅ Alumno guardado con ID: " + alumno.getDni());
 
         JPAUtil.close();
     }

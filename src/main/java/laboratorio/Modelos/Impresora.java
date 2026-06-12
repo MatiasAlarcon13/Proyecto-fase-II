@@ -1,6 +1,8 @@
 package laboratorio.Modelos;
 
-public class Impresora {
+public class
+
+Impresora {
     private String modelo, marca;
     private EstadoImpresora estado;
     private int idImpresora;

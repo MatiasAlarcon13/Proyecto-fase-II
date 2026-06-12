@@ -3,10 +3,10 @@ import jakarta.persistence.EntityManager;
 
 public class UsuarioTestDAO {
     //CREATE
-    public void guardar(UsuarioTest usuario) {
+    public void guardar(UsuarioTest usuarioTest) {
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager(); //inicia la transaccion
         em.getTransaction().begin(); //abrimos la bveda
-        em.persist(usuario); //guardamos el objeto
+        em.persist(usuarioTest); //guardamos el objeto
         em.getTransaction().commit(); //sellamos la transaccion
         em.close();//cierra la conexion
     }
@@ -14,16 +14,16 @@ public class UsuarioTestDAO {
     //READ
     public UsuarioTest buscarPorDni(int dni){
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
-        UsuarioTest usuario = em.find(UsuarioTest.class, dni );
+        UsuarioTest usuarioTest = em.find(UsuarioTest.class, dni );
         em.close();
-        return usuario;
+        return usuarioTest;
     }
 
     //UPDATE
-    public void actualizar(UsuarioTest usuario) {
+    public void actualizar(UsuarioTest usuarioTest) {
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
         em.getTransaction().begin();
-        em.merge(usuario);
+        em.merge(usuarioTest);
         em.getTransaction().commit();
         em.close();
     }
@@ -32,8 +32,8 @@ public class UsuarioTestDAO {
     public void eliminar(int dni) {
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
         em.getTransaction().begin();
-        UsuarioTest usuario = em.find(UsuarioTest.class, dni);
-        em.remove(usuario);
+        UsuarioTest usuarioTest = em.find(UsuarioTest.class, dni);
+        em.remove(usuarioTest);
         em.getTransaction().commit();
         em.close();
     }
