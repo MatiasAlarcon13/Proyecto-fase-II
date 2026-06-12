@@ -69,13 +69,13 @@
         </properties>
         <border type="none"/>
         <children>
-          <component id="d9473" class="javax.swing.JLabel" binding="SelectDocente">
+          <component id="d9473" class="javax.swing.JLabel" binding="SelectUser">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <foreground color="-16777216"/>
-              <text value="Docente"/>
+              <text value="Usuario"/>
             </properties>
           </component>
           <component id="f21a6" class="javax.swing.JButton" binding="docente">
@@ -99,7 +99,7 @@
             <properties>
               <background color="-2363905"/>
               <foreground color="-16777216"/>
-              <text value="Alumno / Invitado"/>
+              <text value="Administrador"/>
             </properties>
           </component>
           <component id="38da7" class="javax.swing.JButton" binding="add">
@@ -123,13 +123,13 @@
               <text value="Agregar usuario"/>
             </properties>
           </component>
-          <component id="cc122" class="javax.swing.JLabel" binding="SelectALumno">
+          <component id="cc122" class="javax.swing.JLabel" binding="SelectAdm">
             <constraints>
               <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <foreground color="-16777216"/>
-              <text value="Alumno / Invitado"/>
+              <text value="Administrador"/>
             </properties>
           </component>
           <hspacer id="3b08b">

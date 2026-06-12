@@ -16,7 +16,7 @@ public class UsuarioDAO {
         EntityManager em = null;
         try {
             em = JPAUtil.getEntityManagerFactory().createEntityManager();
-            String jpql = "SELECT u FROM Usuario a WHERE u.dni = :dniConsultado";
+            String jpql = "SELECT u FROM Usuario u WHERE u.dni = :dniConsultado";
             usuario = em.createQuery(jpql, Usuario.class)
                     .setParameter("dniConsultado", dni)
                     .getSingleResult();

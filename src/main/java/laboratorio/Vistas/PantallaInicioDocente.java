@@ -1,6 +1,7 @@
 package laboratorio.Vistas;
 
 import laboratorio.Modelos.SolicitudImpresion;
+import laboratorio.Modelos.Usuario;
 
 import javax.swing.*;
 import java.util.List;
@@ -18,7 +19,12 @@ public class PantallaInicioDocente {
     private JPanel PanelTarjetasImpresion;
 
 
-    public PantallaInicioDocente() {
+    public PantallaInicioDocente(Usuario usuarioLogueado) {
+        if  (usuarioLogueado != null) {
+            this.nombreDocente.setText("Prof. "+usuarioLogueado.getNombre());
+            this.cuota.setText("Cuota: "+usuarioLogueado.getCuota());
+        }
+
         PanelTarjetasImpresion.setLayout(new BoxLayout(PanelTarjetasImpresion, BoxLayout.Y_AXIS));
         cargarIconosModelos();
     }
