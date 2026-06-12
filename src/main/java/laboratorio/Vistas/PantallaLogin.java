@@ -2,6 +2,7 @@ package laboratorio.Vistas;
 
 import javax.swing.*;
 import java.awt.*;
+import laboratorio.Modelos.Usuario;
 
 public class PantallaLogin {
     private JPanel panelLog;
@@ -14,7 +15,7 @@ public class PantallaLogin {
     private JButton atrasButton;
     private JButton ingresarButton;
 
-    public PantallaLogin(String rolSeleccionado) {
+    public PantallaLogin() {
         try {
             // cargamos la imagen como recurso
             java.net.URL urlLogUser = getClass().getResource("/imagenes/logusser.png");
@@ -73,19 +74,32 @@ public class PantallaLogin {
         });
 
         ingresarButton.addActionListener(e -> {
-            //  Busca el marco (JFrame) actual donde está metido este panel
-            JFrame frameActual = (JFrame) SwingUtilities.getWindowAncestor(panelLog);
+            String username = textField1.getText().trim();
+            String password = new String(passwordField1.getPassword());
+            laboratorio.modulos.UsuarioDAO usuarioDAO = new laboratorio.modulos.UsuarioDAO();
 
-            if (frameActual != null) {
-                // Instancia directamente la nueva pantalla de Alumn
-                PantallaInicioAlumnos pantallaInicioALumno = new PantallaInicioAlumnos();
-                //cambia de panel login -> inicio alumno
-                frameActual.setContentPane(pantallaInicioALumno.getPanelAlumno());
+            Usuario usuarioLogueado = usuarioDAO.verificarCredenciales(username, password);
+            if (usuarioLogueado != null) {
+                String rolDB = usuarioLogueado.getRol();
 
-                // 4. Refrescamos la interfaz para que se redibuje al instante
-                frameActual.revalidate();
-                frameActual.repaint();
+                JFrame frameActual = (JFrame) SwingUtilities.getWindowAncestor(panelLog);
+                if (frameActual != null) {
+                   if (rolDB != null && rolDB.equalsIgnoreCase("Docente")) {
+                       PantallaDocente pantallaLogin = new PantallaDocente(usuarioLogueado);
+                       frameActual.setContentPane(pantallaDocente.getPanelDocente());
+                   } else {
+                       PantallaInicioAlumnos pantallaInicioAlumnos = new PantallaInicioAlumnos(usuarioLogueado);
+                       frameActual.setContentPane(pantallaInicioAlumnos.getPanelAlumno());
+                   }
+                    frameActual.revalidate();
+                    frameActual.repaint();
+                } else {
+                    // Si no coincide o da null, mostramos error
+                    JOptionPane.showMessageDialog(panelLog, "DNI o contraseña incorrectos.", "Error de Login", JOptionPane.ERROR_MESSAGE);
+                }
+
             }
+
         });
     }
 

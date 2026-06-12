@@ -1,5 +1,6 @@
 package laboratorio.Vistas;
 
+import laboratorio.Modelos.Usuario;
 import javax.swing.*;
 import java.awt.*;
 
@@ -44,7 +45,12 @@ public class PantallaInicioAlumnos {
     private JPanel PanelIzq;
     private JPanel PanelDer;
 
-    public PantallaInicioAlumnos() {
+    public PantallaInicioAlumnos(Usuario usuarioLogueado) {
+
+        if (usuarioLogueado != null) {
+            this.usuarioNombre.setText(usuarioLogueado.getNombre());
+            this.cuotaDisponible.setText("Cuota: "+usuarioLogueado.getCuota()+"g");
+        }
         try {
             // 1. Cargamos las imágenes como Recursos usando el ClassLoader
             java.net.URL urlCasa = getClass().getResource("/imagenes/casa.png");

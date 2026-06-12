@@ -13,8 +13,8 @@ public class VentanaSeleccion {
     private JButton add;
     private JPanel PanelPrincipal;
     private JButton docente;
-    private JLabel SelectDocente;
-    private JLabel SelectALumno;
+    private JLabel SelectUser;
+    private JLabel SelectAdm;
     private JLabel SelectAdd;
     private JLabel indicaciones;
 
@@ -23,27 +23,35 @@ public class VentanaSeleccion {
             // se carga las imagenes como recurso
             java.net.URL urlLogUser = getClass().getResource("/imagenes/logusser.png");
             java.net.URL urlAddUser = getClass().getResource("/imagenes/addUsser.png");
+            java.net.URL urlAdm = getClass().getResource("/imagenes/admUser.png");
 
             // Agrega 'logusser.png' en el botón de Profesor y Alumno
             if (urlLogUser != null) {
                 ImageIcon iconoOriginal = new ImageIcon(urlLogUser);
                 Image imgEscalada = iconoOriginal.getImage().getScaledInstance(160, 160, Image.SCALE_SMOOTH);
-                SelectDocente.setIcon(new ImageIcon(imgEscalada));
-                SelectDocente.setText("");
-                SelectALumno.setIcon(new ImageIcon(imgEscalada));
-                SelectALumno.setText("");
+                SelectUser.setIcon(new ImageIcon(imgEscalada));
+                SelectUser.setText("");
             } else {
                 System.err.println("No se encontró el recurso: /imagenes/logusser.png");
             }
 
-            // lo mismo pero con 'add usser'
+            if  (urlAdm != null) {
+                ImageIcon iconoOriginal = new ImageIcon(urlAdm);
+                Image imgEscalada = iconoOriginal.getImage().getScaledInstance(180, 180, Image.SCALE_SMOOTH);
+                SelectAdm.setIcon(new ImageIcon(imgEscalada));
+                SelectAdm.setText("");
+            } else {
+                System.err.println("No se encontró el recurso: /imagenes/admUser.png");
+            }
+
+            // lo mismo pero con 'add user'
             if (urlAddUser != null) {
                 ImageIcon iconoOriginal = new ImageIcon(urlAddUser);
                 Image imgEscalada = iconoOriginal.getImage().getScaledInstance(160, 160, Image.SCALE_SMOOTH);
                 SelectAdd.setIcon(new ImageIcon(imgEscalada));
                 SelectAdd.setText("");
             } else {
-                System.err.println("No se encontró el recurso: /imagenes/addUsser.png");
+                System.err.println("No se encontró el recurso: /imagenes/addUser.png");
             }
 
         } catch (Exception e) {
@@ -91,17 +99,17 @@ public class VentanaSeleccion {
             System.err.println("Error al cambiar el tamaño de texto de los botones: " + e.getMessage());
         }
 
-        docente.addActionListener(e -> abrirPantallaLogin("Docente"));
-        alumno.addActionListener(e -> abrirPantallaLogin("Alumno"));
+        docente.addActionListener(e -> abrirPantallaLogin());
+        alumno.addActionListener(e -> abrirPantallaLogin());
         add.addActionListener(e -> abrirPantallaAdd());
 
     }
 
-    private void abrirPantallaLogin(String rolSeleccionado) {
+    private void abrirPantallaLogin() {
         JFrame frameActual = (JFrame) SwingUtilities.getWindowAncestor(PanelPrincipal);
 
         if (frameActual != null) {
-            PantallaLogin pantallaLogin = new PantallaLogin(rolSeleccionado);
+            PantallaLogin pantallaLogin = new PantallaLogin();
             frameActual.setContentPane(pantallaLogin.getPanelLog());
             frameActual.revalidate();
             frameActual.repaint();
