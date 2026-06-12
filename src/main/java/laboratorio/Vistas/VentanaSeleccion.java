@@ -37,7 +37,7 @@ public class VentanaSeleccion {
 
             if  (urlAdm != null) {
                 ImageIcon iconoOriginal = new ImageIcon(urlAdm);
-                Image imgEscalada = iconoOriginal.getImage().getScaledInstance(180, 180, Image.SCALE_SMOOTH);
+                Image imgEscalada = iconoOriginal.getImage().getScaledInstance(160, 160, Image.SCALE_SMOOTH);
                 SelectAdm.setIcon(new ImageIcon(imgEscalada));
                 SelectAdm.setText("");
             } else {
