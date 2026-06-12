@@ -11,7 +11,7 @@ public class UsuarioController {
         return new Alumno(nombre, dni, correo, cuotaMax);
     }
 
-    public Profesor crearProfesor(String nombre, int dni, String correo, double cuotaDisponible) {
+    public Profesor crearProfesor(String nombre, int dni, String correo, int cuotaDisponible) {
         return new Profesor(nombre, dni, correo, cuotaDisponible);
     }
 
