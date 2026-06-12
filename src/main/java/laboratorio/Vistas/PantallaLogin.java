@@ -85,8 +85,8 @@ public class PantallaLogin {
                 JFrame frameActual = (JFrame) SwingUtilities.getWindowAncestor(panelLog);
                 if (frameActual != null) {
                    if (rolDB != null && rolDB.equalsIgnoreCase("Docente")) {
-                       PantallaDocente pantallaLogin = new PantallaDocente(usuarioLogueado);
-                       frameActual.setContentPane(pantallaDocente.getPanelDocente());
+                       PantallaInicioDocente pantallaInicioDocente = new PantallaInicioDocente(usuarioLogueado);
+                       frameActual.setContentPane(pantallaInicioDocente.getPanelDocente());
                    } else {
                        PantallaInicioAlumnos pantallaInicioAlumnos = new PantallaInicioAlumnos(usuarioLogueado);
                        frameActual.setContentPane(pantallaInicioAlumnos.getPanelAlumno());
