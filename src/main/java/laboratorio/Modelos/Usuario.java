@@ -1,15 +1,12 @@
 package laboratorio.Modelos;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Usuario")
 @Inheritance(strategy = jakarta.persistence.InheritanceType.JOINED)
+@DiscriminatorColumn(name="Categoria", discriminatorType=DiscriminatorType.STRING)//columna para declarar el tipo de usuario
+
 public abstract class Usuario {
     @Column (name = "nombre")
     protected String nombre;

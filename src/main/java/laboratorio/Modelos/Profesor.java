@@ -1,12 +1,10 @@
 package laboratorio.Modelos;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.PrimaryKeyJoinColumn;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Profesor")
 @PrimaryKeyJoinColumn(name = "dni")
+@DiscriminatorValue("Docente")
 public class Profesor extends Usuario {
     @Column (name = "cuotaDisponible")
     private int cuotaDisponible;
