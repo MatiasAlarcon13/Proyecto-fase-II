@@ -23,7 +23,10 @@ public class PantallaInicioDocente {
     public PantallaInicioDocente(Usuario usuarioLogueado) {
         if  (usuarioLogueado != null) {
             this.nombreDocente.setText("Prof. "+usuarioLogueado.getNombre());
-            this.cuota.setText("Cuota: "+usuarioLogueado.getCuota());
+
+            if (usuarioLogueado.getRol().equals("Docente")) {
+                this.cuota.setText("Cuota: Ilimitada");
+            }
         }
 
         PanelTarjetasImpresion.setLayout(new BoxLayout(PanelTarjetasImpresion, BoxLayout.Y_AXIS));

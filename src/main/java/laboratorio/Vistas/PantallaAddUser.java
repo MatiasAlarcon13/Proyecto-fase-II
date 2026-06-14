@@ -103,9 +103,9 @@ public class PantallaAddUser {
 
                 Usuario nuevoUsuario;
                 if(RadioDocente.isSelected()) {
-                    nuevoUsuario = new Profesor(nombreAdd,dniAdd, addCorreo);
+                    nuevoUsuario = new Profesor(nombreAdd,dni, addCorreo, 500);
                 } else {
-                    nuevoUsuario = new Alumno(nombreAdd, dniAdd, addCorreo);
+                    nuevoUsuario = new Alumno(nombreAdd, dni, addCorreo, 500);
                 }
                 UsuarioDAO usuarioDAO = new UsuarioDAO();
                 usuarioDAO.guardar(nuevoUsuario);
