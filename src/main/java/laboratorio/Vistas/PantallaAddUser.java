@@ -22,6 +22,7 @@ public class PantallaAddUser {
     private JButton btnback;
     private JButton registrarseButton;
     private JTextField IngresarCorreo;
+    private JLabel Correo;
 
     public PantallaAddUser() {
 
@@ -58,11 +59,14 @@ public class PantallaAddUser {
             RadioAlumno.setFont(fuenteCamposText);
             btnback.setFont(fuenteCamposText);
             registrarseButton.setFont(fuenteCamposText);
+            Correo.setFont(fuenteCamposText);
+
 
             //feunte en las cajas de texto
             Font fuenteCajasBlancas = new Font(fuenteBase.getName(), Font.PLAIN, 16);
             addNombre.setFont(fuenteCajasBlancas);
             AddDNI.setFont(fuenteCajasBlancas);
+            IngresarCorreo.setFont(fuenteCajasBlancas);
 
         } catch (Exception e) {
             System.err.println("Error al agrandar los textos del login: " + e.getMessage());
@@ -110,11 +114,11 @@ public class PantallaAddUser {
                 UsuarioDAO usuarioDAO = new UsuarioDAO();
                 usuarioDAO.guardar(nuevoUsuario);
 
-                JOptionPane.showMessageDialog(PanelAdd, "¡Usuario registrado correctamente en el sistema.", "Registro Exitoso", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(PanelAdd, "Usuario registrado correctamente en el sistema.", "Registro Exitoso", JOptionPane.INFORMATION_MESSAGE);
                 limpiarFormulario();
             } catch (NumberFormatException ex) {
             // Captura controlada del error si escriben letras en el campo DNI
-            JOptionPane.showMessageDialog(PanelAdd, "El campo DNI debe poseer únicamente números sin puntos.", "Error de formato", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(PanelAdd, "Ingresar unicamente numeros sin punto.", "Error de formato", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
             // Captura ante cualquier problema del motor de persistencia de Hibernate
             JOptionPane.showMessageDialog(PanelAdd, "Ocurrió un error inesperado al almacenar el perfil: " + ex.getMessage(), "Error Crítico", JOptionPane.ERROR_MESSAGE);
