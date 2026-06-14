@@ -2,6 +2,11 @@ package laboratorio.Vistas;
 
 import javax.swing.*;
 import java.awt.*;
+import laboratorio.Modelos.Alumno;
+import laboratorio.Modelos.Profesor;
+import laboratorio.Modelos.Usuario;
+import laboratorio.modulos.AlumnoDAO;
+import laboratorio.modulos.UsuarioDAO;
 
 public class PantallaAddUser {
     private JPanel PanelAdd;
@@ -16,8 +21,10 @@ public class PantallaAddUser {
     private JLabel AddMEnsaje;
     private JButton btnback;
     private JButton registrarseButton;
+    private JTextField IngresarCorreo;
 
     public PantallaAddUser() {
+
         try {
             // 1. Cargamos las imágenes como Recursos usando el ClassLoader
             java.net.URL urlAddUser = getClass().getResource("/imagenes/addUsser.png");
@@ -81,6 +88,45 @@ public class PantallaAddUser {
                 frameActual.repaint();
             }
         });
+
+        registrarseButton.addActionListener(e -> {
+            String dniAdd = AddDNI.getText().trim();
+            String nombreAdd = addNombre.getText().trim();
+            String addCorreo = IngresarCorreo.getText().trim();
+
+            if (dniAdd.isEmpty() || nombreAdd.isEmpty() || addCorreo.isEmpty()) {
+                JOptionPane.showMessageDialog(PanelAdd, "Por favor, complete todos los campos obligatorios.", "Campos incompletos", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            try {
+                int dni = Integer.parseInt(dniAdd);
+
+                Usuario nuevoUsuario;
+                if(RadioDocente.isSelected()) {
+                    nuevoUsuario = new Profesor(nombreAdd,dniAdd, addCorreo);
+                } else {
+                    nuevoUsuario = new Alumno(nombreAdd, dniAdd, addCorreo);
+                }
+                UsuarioDAO usuarioDAO = new UsuarioDAO();
+                usuarioDAO.guardar(nuevoUsuario);
+
+                JOptionPane.showMessageDialog(PanelAdd, "¡Usuario registrado correctamente en el sistema.", "Registro Exitoso", JOptionPane.INFORMATION_MESSAGE);
+                limpiarFormulario();
+            } catch (NumberFormatException ex) {
+            // Captura controlada del error si escriben letras en el campo DNI
+            JOptionPane.showMessageDialog(PanelAdd, "El campo DNI debe poseer únicamente números sin puntos.", "Error de formato", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            // Captura ante cualquier problema del motor de persistencia de Hibernate
+            JOptionPane.showMessageDialog(PanelAdd, "Ocurrió un error inesperado al almacenar el perfil: " + ex.getMessage(), "Error Crítico", JOptionPane.ERROR_MESSAGE);
+        }
+        });
+    }
+
+    private void limpiarFormulario() {
+        addNombre.setText("");
+        AddDNI.setText("");
+        IngresarCorreo.setText("");
+        RadioAlumno.setSelected(true);
     }
 
     public JPanel getPanelAdd() {
