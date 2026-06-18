@@ -5,6 +5,8 @@
         <class>laboratorio.Modelos.Usuario</class>
         <class>laboratorio.Modelos.Alumno</class>
         <class>laboratorio.Modelos.Profesor</class>
+        <class>laboratorio.Modelos.SolicitudImpresion</class>
+        <class>laboratorio.Modelos.ModelosImpresion</class>
         <!-- Agrega más clases de entidad aquí -->
         <properties>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://b1unyworwu2a9l0rq4xq-mysql.services.clever-cloud.com:3306/b1unyworwu2a9l0rq4xq"/>

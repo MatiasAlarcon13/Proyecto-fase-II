@@ -1,6 +1,7 @@
 package laboratorio.Modelos;
 
 public class ModelosImpresion {
+    private int idModelo;
     private double tiempoEstimado;
     private double gramosRequeridos;
     private String nombreModelo;
