@@ -3,7 +3,6 @@ package laboratorio.Persistencia;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import laboratorio.Modelos.SolicitudImpresion;
-import laboratorio.Modelos.Alumno;
 
 public class SolicitudImpresionDAO {
     public void guardar(SolicitudImpresion solicitudImpresion) {
@@ -14,12 +13,19 @@ public class SolicitudImpresionDAO {
     }
 
     public laboratorio.Modelos.SolicitudImpresion buscarSolicitudImpresion(int idSolicitud) {
+        //devuelve la solicitud + el usuario que la solicito
         SolicitudImpresion solicitudImpresion = null;
         EntityManager entityManager = null;
 
         try {
             entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
-            solicitudImpresion = entityManager.find(SolicitudImpresion.class, idSolicitud);
+            String jpql = "SELECT s FROM SolicitudImpresion s " +
+                    "JOIN FETCH s.usuario " +
+                    "WHERE s.idSolicitud = :idSolicitud";
+
+            solicitudImpresion = entityManager.createQuery(jpql, SolicitudImpresion.class)
+                    .setParameter("idSolicitud", idSolicitud)
+                    .getSingleResult();
         } catch (NoResultException e) {
 
             System.out.println("No se encontró la solicitud con ID: " + idSolicitud);

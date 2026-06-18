@@ -6,7 +6,7 @@ import laboratorio.Modelos.Alumno;
 import laboratorio.Modelos.ModelosImpresion;
 
 public class ModelosImpresionDAO {
-    public void guardar(ModelosImpresion modelosImpresion) {
+    public void guardarModelo(ModelosImpresion modelosImpresion) {
         EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         entityManager.getTransaction().begin();
         entityManager.persist(modelosImpresion);
@@ -32,7 +32,7 @@ public class ModelosImpresionDAO {
         }
         return modelosImpresion;
     }
-    public void actualizar(ModelosImpresion modelosImpresion) {
+    public void actualizarModelo(ModelosImpresion modelosImpresion) {
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
         em.getTransaction().begin();
         em.merge(modelosImpresion);
@@ -40,7 +40,7 @@ public class ModelosImpresionDAO {
         em.close();
     }
 
-    public void eliminar(int idModelo) {
+    public void eliminarModelo(int idModelo) {
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
         em.getTransaction().begin();
         ModelosImpresion modelosImpresion= em.find(ModelosImpresion.class, idModelo);

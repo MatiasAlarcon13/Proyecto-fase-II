@@ -1,12 +1,22 @@
 package laboratorio.Modelos;
 import laboratorio.Modelos.SolicitudImpresion;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name= "Solicitudes_Impresion")
 public class SolicitudImpresion {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private String nombreArchivo, titularSolicitud, rol, correo, modelo;
     private int idImpresion, idImpresora, dni, capas;
     private String fechaSolicitud;
     private double tiempoEstimado, gramosRequeridos;
     private static int contadorImpresion = 1;
+
+    @ManyToOne (fetch = FetchType.LAZY)//carga el usuario solo si lo necesita
+    @JoinColumn(name="idUsuario")
+    private Usuario usuario;
 
     public SolicitudImpresion(String nombreArchivo, double tiempoEstimado, double gramosRequeridos, Usuario usuario, ModelosImpresion modelos) {
         this.nombreArchivo = nombreArchivo;
@@ -21,6 +31,10 @@ public class SolicitudImpresion {
         this.capas = modelos.getTotalCapas();
         this.modelo = modelos.getNombreModelo();
     }
+
+    public Usuario getUsuario() {return usuario;}
+    public void setUsuario(Usuario usuario) {this.usuario = usuario;}
+
 
     public String getNombreArchivo() { return nombreArchivo; }
     public void setNombreArchivo(String nombreArchivo) { this.nombreArchivo = nombreArchivo; }
