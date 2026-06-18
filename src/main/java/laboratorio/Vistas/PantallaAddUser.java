@@ -5,8 +5,7 @@ import java.awt.*;
 import laboratorio.Modelos.Alumno;
 import laboratorio.Modelos.Profesor;
 import laboratorio.Modelos.Usuario;
-import laboratorio.modulos.AlumnoDAO;
-import laboratorio.modulos.UsuarioDAO;
+import laboratorio.Persistencia.UsuarioDAO;
 
 public class PantallaAddUser {
     private JPanel PanelAdd;

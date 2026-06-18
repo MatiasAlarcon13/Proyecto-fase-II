@@ -76,7 +76,7 @@ public class PantallaLogin {
         ingresarButton.addActionListener(e -> {
             String username = textField1.getText().trim();
             String password = new String(passwordField1.getPassword());
-            laboratorio.modulos.UsuarioDAO usuarioDAO = new laboratorio.modulos.UsuarioDAO();
+            laboratorio.Persistencia.UsuarioDAO usuarioDAO = new laboratorio.Persistencia.UsuarioDAO();
 
             Usuario usuarioLogueado = usuarioDAO.verificarCredenciales(username, password);
             if (usuarioLogueado != null) {
