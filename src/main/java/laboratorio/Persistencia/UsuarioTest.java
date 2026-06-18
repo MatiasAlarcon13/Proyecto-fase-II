@@ -1,4 +1,4 @@
-package laboratorio.modulos;
+package laboratorio.Persistencia;
 import jakarta.persistence.*;
 @Entity
 @Table(name = "Usuario")

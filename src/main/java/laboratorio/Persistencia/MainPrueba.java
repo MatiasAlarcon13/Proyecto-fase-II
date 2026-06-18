@@ -1,8 +1,7 @@
-package laboratorio.modulos;
+package laboratorio.Persistencia;
 
 import laboratorio.Modelos.Alumno;
 import laboratorio.Modelos.Profesor;
-import laboratorio.Modelos.Usuario;
 
 public class MainPrueba {
     public static void main(String[] args) {

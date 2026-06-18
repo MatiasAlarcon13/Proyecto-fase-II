@@ -1,4 +1,4 @@
-package laboratorio.modulos;
+package laboratorio.Persistencia;
 
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;

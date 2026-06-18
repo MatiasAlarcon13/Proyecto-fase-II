@@ -1,4 +1,4 @@
-package laboratorio.modulos;
+package laboratorio.Persistencia;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import laboratorio.Modelos.Usuario;

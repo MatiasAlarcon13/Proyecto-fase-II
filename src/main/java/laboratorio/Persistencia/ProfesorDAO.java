@@ -1,25 +1,25 @@
-package laboratorio.modulos;
+package laboratorio.Persistencia;
 import jakarta.persistence.EntityManager;
 import laboratorio.Modelos.Alumno;
+import laboratorio.Modelos.Profesor;
 
-public class AlumnoDAO {
-    //CREATE
-    public void guardar(Alumno alumno) {
+public class ProfesorDAO {
+    public void guardar(Profesor profesor) {
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager(); //inicia la transaccion
         em.getTransaction().begin(); //abrimos la bveda
-        em.persist(alumno); //guardamos el objeto
+        em.persist(profesor); //guardamos el objeto
         em.getTransaction().commit(); //sellamos la transaccion
         em.close();//cierra la conexion
     }
 
     //READ
     public laboratorio.Modelos.Alumno buscarPorDni(int dni){
-        Alumno alumno = null;
+        Alumno profesor = null;
         EntityManager em = null;
         try {
             em = JPAUtil.getEntityManagerFactory().createEntityManager();
             String jpql = "SELECT a FROM Alumno a WHERE a.dni = :dniConsultado";
-            alumno = em.createQuery(jpql, Alumno.class)
+            profesor = em.createQuery(jpql, Alumno.class)
                     .setParameter("dniConsultado", dni)
                     .getSingleResult();
 
@@ -35,20 +35,20 @@ public class AlumnoDAO {
                 em.close();
             }
         }
-        return alumno;
+        return profesor;
     }
 
     //UPDATE
-    public void actualizar(Alumno alumno) {
+    public void actualizar(Profesor profesor) {
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
         em.getTransaction().begin();
-        em.merge(alumno);
+        em.merge(profesor);
         em.getTransaction().commit();
         em.close();
     }
 
     // DELETE
-   //try-catch
+    //try-catch
     public void eliminar(int dni) {
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
         em.getTransaction().begin();
@@ -58,3 +58,4 @@ public class AlumnoDAO {
         em.close();
     }
 }
+
