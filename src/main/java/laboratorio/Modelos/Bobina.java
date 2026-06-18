@@ -1,26 +1,41 @@
 package laboratorio.Modelos;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "Bobina")
 public class Bobina {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idBobina")
     private int idBobina;
-    private String material, color;
+
+    @Column(name = "material", nullable = false)
+    private String material;
+
+    @Column(name = "color", nullable = false)
+    private String color;
+
+    @Column(name = "gramos", nullable = false)
     private Double gramos;
-    private static int contadorBobina = 1;
 
     public Bobina() {}
 
-    public Bobina(int idBobina, String material, String color, Double gramos) {
-        this.idBobina = contadorBobina++;
+    // ─── Constructor de uso normal ────────────────────────────────────────────
+    public Bobina(String material, String color, Double gramos) {
         this.material = material;
         this.color = color;
-        setbobinaGramos(gramos);
+        setGramos(gramos);
     }
+
 
     public boolean tieneMaterial(SolicitudImpresion solicitud) {
         return this.gramos >= solicitud.getGramosRequeridos();
     }
 
     /**
-     * Descuenta material. Retorna false si no hay suficiente material.
+     * Descuenta material. Retorna false si no hay suficiente.
      */
     public boolean descontarMaterial(SolicitudImpresion solicitud) {
         if (!tieneMaterial(solicitud)) return false;
@@ -29,21 +44,25 @@ public class Bobina {
     }
 
     /**
-     * Retorna false si filamento <= 20g (requiere mantenimiento).
+     * Retorna false si el filamento <= 20g (requiere mantenimiento).
      */
     public boolean mantenimientoBobina() {
         return gramos > 20;
     }
 
-    public int getidBobina() { return idBobina; }
-    public String getmaterialBobina() { return material; }
-    public void setmaterialBobina(String material) { this.material = material; }
-    public String getbobinaColor() { return color; }
-    public void setbobinaColor(String color) { this.color = color; }
-    public Double getbobinaGramos() { return gramos; }
+    // ─── Getters y Setters ────────────────────────────────────────────────────
 
-    public void setbobinaGramos(Double gramos) {
-        if (gramos < 0) return; // validación: controller/view manejan el mensaje
-        this.gramos = gramos;
+    public int getidBobina()                    { return idBobina; }
+    public String getmaterialBobina()           { return material; }
+    public void setmaterialBobina(String m)     { this.material = m; }
+    public String getbobinaColor()              { return color; }
+    public void setbobinaColor(String c)        { this.color = c; }
+    public Double getbobinaGramos()             { return gramos; }
+
+    public void setGramos(Double gramos) {
+        if (gramos != null && gramos >= 0) this.gramos = gramos;
     }
+
+    // Alias mantenido para compatibilidad con código existente
+    public void setbobinaGramos(Double gramos) { setGramos(gramos); }
 }
