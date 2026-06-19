@@ -46,7 +46,7 @@ public class PantallaInicioDocente {
             );
 
             tarjeta.getBtnOk().addActionListener(e -> {
-                System.out.println("Solicitud Aprobada: "+sol.getIdImpresion());
+                System.out.println("Solicitud Aprobada: "+sol.getIdSolicitud());
             });
 
             tarjeta.getBtnCancel().addActionListener(e -> {

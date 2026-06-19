@@ -45,7 +45,10 @@ public class PantallaInicioAlumnos {
     private JPanel PanelIzq;
     private JPanel PanelDer;
 
+    private final Usuario usuarioSesion;
+
     public PantallaInicioAlumnos(Usuario usuarioLogueado) {
+        this.usuarioSesion = usuarioLogueado;
 
         if (usuarioLogueado != null) {
             this.usuarioNombre.setText(usuarioLogueado.getNombre());
@@ -63,8 +66,6 @@ public class PantallaInicioAlumnos {
                 Image imgEscalada = iconoOriginal.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
                 imgCasa.setIcon(new ImageIcon(imgEscalada));
                 imgCasa.setText("");
-            } else {
-                System.err.println("No se encontró el recurso: /imagenes/casa.png");
             }
 
             // Escalado de la Imagen del Puente
@@ -73,8 +74,6 @@ public class PantallaInicioAlumnos {
                 Image imgEscalada = iconoOriginal.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
                 imgPuente.setIcon(new ImageIcon(imgEscalada));
                 imgPuente.setText("");
-            } else {
-                System.err.println("No se encontró el recurso: /imagenes/puente.png");
             }
 
             // Escalado de la Imagen de la Pelota
@@ -83,12 +82,10 @@ public class PantallaInicioAlumnos {
                 Image imgEscalada = iconoOriginal.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
                 imgPelota.setIcon(new ImageIcon(imgEscalada));
                 imgPelota.setText("");
-            } else {
-                System.err.println("No se encontró el recurso: /imagenes/pelota.png");
             }
 
         } catch (Exception e) {
-            System.err.println("Error al cargar los íconos de los modelos: " + e.getMessage());
+            //captura
         }
 
         try {
@@ -123,7 +120,7 @@ public class PantallaInicioAlumnos {
             totalCapasPu.setFont(fuentecuerpo);
 
         } catch (Exception e) {
-            System.err.println("Error al agrandar los textos del login: " + e.getMessage());
+           //
         }
 
         btnBack.addActionListener(e -> {
@@ -152,7 +149,7 @@ public class PantallaInicioAlumnos {
                 JDialog dialogo = new JDialog(frameActual, "Subir Nuevo Archivo", true); // 'true' la hace modal
 
                 // diseño del formulario flotante
-                VentanaNuevoArchivo formFlotante = new VentanaNuevoArchivo();
+                VentanaNuevoArchivo formFlotante = new VentanaNuevoArchivo(usuarioSesion);
 
                 // panel de tu diseño adentro del diálogo emergente
                 dialogo.setContentPane(formFlotante.getPanelNuevoArchivo());
@@ -174,4 +171,3 @@ public class PantallaInicioAlumnos {
     }
 
 }
-

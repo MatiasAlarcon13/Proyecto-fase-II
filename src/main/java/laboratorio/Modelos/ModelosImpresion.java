@@ -80,4 +80,7 @@ public class ModelosImpresion {
     public int getIdModelo() {
         return idModelo;
     }
+    public void setIdModelo(int idModelo) {
+        this.idModelo = idModelo;
+    }
 }

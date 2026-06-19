@@ -12,7 +12,7 @@ public class JPAUtil { //crea la conexion con la base de datos
 
     static {
         try {
-            emf = Persistence.createEntityManagerFactory("Persistencia");
+            emf = Persistence.createEntityManagerFactory("MiUnidadPersistencia");
         } catch (Throwable ex) {
             logger.log(Level.SEVERE, "Error critico al inicializar el EntityManagerFactory", ex);
             throw new ExceptionInInitializerError(ex);

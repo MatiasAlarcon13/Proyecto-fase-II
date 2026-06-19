@@ -79,27 +79,29 @@ public class PantallaLogin {
             laboratorio.Persistencia.UsuarioDAO usuarioDAO = new laboratorio.Persistencia.UsuarioDAO();
 
             Usuario usuarioLogueado = usuarioDAO.verificarCredenciales(username, password);
+
             if (usuarioLogueado != null) {
                 String rolDB = usuarioLogueado.getRol();
-
                 JFrame frameActual = (JFrame) SwingUtilities.getWindowAncestor(panelLog);
+
                 if (frameActual != null) {
-                   if (rolDB != null && rolDB.equalsIgnoreCase("Docente")) {
-                       PantallaInicioDocente pantallaInicioDocente = new PantallaInicioDocente(usuarioLogueado);
-                       frameActual.setContentPane(pantallaInicioDocente.getPanelDocente());
-                   } else {
-                       PantallaInicioAlumnos pantallaInicioAlumnos = new PantallaInicioAlumnos(usuarioLogueado);
-                       frameActual.setContentPane(pantallaInicioAlumnos.getPanelAlumno());
-                   }
+                    if (rolDB != null && rolDB.equalsIgnoreCase("ADMIN")) {
+                        // Va a tu nueva pantalla de control de administrador
+                        PantallaAdministrador pantallaAdmin = new PantallaAdministrador(usuarioLogueado);
+                        frameActual.setContentPane(pantallaAdmin.getPanelPrincipalAdm());
+                    } else if (rolDB != null && rolDB.equalsIgnoreCase("Docente")) {
+                        PantallaInicioDocente pantallaInicioDocente = new PantallaInicioDocente(usuarioLogueado);
+                        frameActual.setContentPane(pantallaInicioDocente.getPanelDocente());
+                    } else {
+                        PantallaInicioAlumnos pantallaInicioAlumnos = new PantallaInicioAlumnos(usuarioLogueado);
+                        frameActual.setContentPane(pantallaInicioAlumnos.getPanelAlumno());
+                    }
                     frameActual.revalidate();
                     frameActual.repaint();
-                } else {
-                    // Si no coincide o da null, mostramos error
-                    JOptionPane.showMessageDialog(panelLog, "DNI o contraseña incorrectos.", "Error de Login", JOptionPane.ERROR_MESSAGE);
                 }
-
+            } else {
+                JOptionPane.showMessageDialog(panelLog, "DNI o contraseña incorrectos.", "Error de Login", JOptionPane.ERROR_MESSAGE);
             }
-
         });
     }
 

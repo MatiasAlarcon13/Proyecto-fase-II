@@ -59,7 +59,7 @@ public class Registro {
         r.motivo      = motivo.trim();
         r.dniUsuario  = String.valueOf(usuario.getDni());
         r.idImpresora = impresora.getIdImpresora();
-        r.idImpresion = solicitud.getIdImpresion();
+        r.idImpresion = solicitud.getIdSolicitud();
         r.idBobina    = bobina.getidBobina();
 
         return r;

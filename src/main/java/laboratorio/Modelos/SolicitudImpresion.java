@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 public class SolicitudImpresion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idSolicitud;
+    private int idSolicitud;
 
     @Column(name="nombre_Archivo")
     private String nombreArchivo;
@@ -39,7 +39,7 @@ public class SolicitudImpresion {
         this.modelo = modelos.getNombreModelo();
     }
 
-    public Long getIdSolicitud() { return idSolicitud; }
+    public int getIdSolicitud() { return idSolicitud; }
 
     public Usuario getUsuario() {return usuario;}
     public void setUsuario(Usuario usuario) {this.usuario = usuario;}

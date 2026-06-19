@@ -1,50 +1,45 @@
 package laboratorio.Controladores;
+
 import laboratorio.Modelos.ModelosImpresion;
 import laboratorio.Persistencia.ModelosImpresionDAO;
+import java.util.List;
 
 public class ModelosImpresionController {
-    private final ModelosImpresionDAO  modelosDAO = new ModelosImpresionDAO();
 
-    //buscar
-    public ModelosImpresion obtenerModelosImpresion(String nombreModelo) {
-        if (nombreModelo == null || nombreModelo.trim().isEmpty()){
-            return null;
-        }
-        return modelosDAO.buscarModelos(nombreModelo);
+    private final ModelosImpresionDAO modelosDAO = new ModelosImpresionDAO();
+
+    public List<ModelosImpresion> listarTodos() {
+        return modelosDAO.buscarTodosModelos();
     }
-//agregar
-     public ModelosImpresion agregarModelosImpresion(ModelosImpresion nuevoModelo) {
-         if (nuevoModelo == null) {
-             return null;
-         }
-         if (nuevoModelo.getNombreModelo() == null || nuevoModelo.getNombreModelo().trim().isEmpty()) {
-             return null;
-         }
-         if (nuevoModelo.getGramosRequeridos() <= 0) {
-             return null;
-         }
-         modelosDAO.guardarModelo(nuevoModelo);
-         return nuevoModelo;
-     }
 
-     // modificar
-     public ModelosImpresion modificarModelo(ModelosImpresion modeloModificado){
-         if (modeloModificado == null || modeloModificado.getIdModelo() == 0){
-             return null;
-         }
 
-         modelosDAO.actualizarModelo(modeloModificado);
-         return modeloModificado;
-     }
+    public ModelosImpresion guardarModelo(ModelosImpresion modelo) {
+        try {
+            if (modelo.getIdModelo() == 0) {
+                modelosDAO.guardarModelo(modelo);
+            } else {
+                modelosDAO.actualizarModelo(modelo);
+            }
+            return modelo;
+        } catch (Exception e) {
+            return null; // Retorno defensivo por si falla la persistencia
+        }
+    }
 
-    public boolean eliminarModelo(int idModelo){
-        if (idModelo <= 0){
+    public boolean eliminarModelo(int id) {
+        try {
+            modelosDAO.eliminarModelo(id);
+            return true;
+        } catch (Exception e) {
             return false;
         }
+    }
 
-        modelosDAO.eliminarModelo(idModelo);
-        return true;
+    public ModelosImpresion obtenerModelosImpresion(String nombreModelo) {
+        try {
+            return modelosDAO.buscarModelos(nombreModelo);
+        } catch (Exception e) {
+            return null; // Retorno defensivo por si no existe o falla la BD
+        }
     }
 }
-
-

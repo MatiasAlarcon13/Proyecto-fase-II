@@ -4,9 +4,26 @@ import jakarta.persistence.EntityManager;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import laboratorio.Modelos.ModelosImpresion;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ModelosImpresionDAO {
     private static final Logger logger = Logger.getLogger(ModelosImpresionDAO.class.getName());
+
+    public List<ModelosImpresion> buscarTodosModelos() {
+        EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
+        try {
+            return em.createQuery("SELECT m FROM ModelosImpresion m", ModelosImpresion.class)
+                    .getResultList();
+        } catch (Exception ex) {
+            logger.log(Level.SEVERE, "Error al listar los modelos", ex);
+            return new ArrayList<>(); // Retorno defensivo para evitar NullPointerException
+        } finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+        }
+    }
 
     public void guardarModelo(ModelosImpresion modelosImpresion) {
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
@@ -16,7 +33,7 @@ public class ModelosImpresionDAO {
             em.getTransaction().commit();
         } catch (Exception ex) {
             if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback(); // Deshace cambios si falla
+                em.getTransaction().rollback();
             }
             logger.log(Level.SEVERE, "Error al guardar el modelo", ex);
         } finally {
@@ -41,6 +58,7 @@ public class ModelosImpresionDAO {
             }
         }
     }
+
     public void actualizarModelo(ModelosImpresion modelosImpresion) {
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
         try {
@@ -63,7 +81,6 @@ public class ModelosImpresionDAO {
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
         try {
             em.getTransaction().begin();
-            // Buscamos el modelo dentro del contexto de persistencia actual usando su ID entero
             ModelosImpresion modelosImpresion = em.find(ModelosImpresion.class, idModelo);
             if (modelosImpresion != null) {
                 em.remove(modelosImpresion);
