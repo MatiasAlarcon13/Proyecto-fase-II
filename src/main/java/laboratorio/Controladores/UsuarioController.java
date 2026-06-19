@@ -4,15 +4,24 @@ import laboratorio.Modelos.Alumno;
 import laboratorio.Modelos.Profesor;
 import laboratorio.Modelos.Usuario;
 import laboratorio.Modelos.SolicitudImpresion;
+import laboratorio.Persistencia.AlumnoDAO;
+import laboratorio.Persistencia.ProfesorDAO;
 
 public class UsuarioController {
 
+    private final AlumnoDAO alumnoDAO = new AlumnoDAO();
+    private final ProfesorDAO profesorDAO = new ProfesorDAO();
+
     public Alumno crearAlumno(String nombre, int dni, String correo, double cuotaMax) {
-        return new Alumno(nombre, dni, correo, cuotaMax);
+        Alumno nuevoAlumno = new Alumno(nombre, dni, correo, cuotaMax);
+        alumnoDAO.guardar(nuevoAlumno); //PERSISTE EN LA BD
+        return nuevoAlumno;
     }
 
     public Profesor crearProfesor(String nombre, int dni, String correo, int cuotaDisponible) {
-        return new Profesor(nombre, dni, correo, cuotaDisponible);
+        Profesor nuevoProfesor = new Profesor(nombre, dni, correo, cuotaDisponible);
+        profesorDAO.guardar(nuevoProfesor);
+        return nuevoProfesor;
     }
 
     public boolean tieneCuota(Usuario usuario, double gramos) {
@@ -30,6 +39,7 @@ public class UsuarioController {
     public boolean descontarCuotaAlumno(Alumno alumno, SolicitudImpresion solicitud) {
         if (!alumno.tieneCuotaDisponible(solicitud.getGramosRequeridos())) return false;
         alumno.descontarCuota(solicitud);
+        alumnoDAO.actualizar(alumno);
         return true;
     }
 }
