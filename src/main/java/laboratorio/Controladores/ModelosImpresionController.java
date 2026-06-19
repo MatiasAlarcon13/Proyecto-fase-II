@@ -13,34 +13,38 @@ public class ModelosImpresionController {
         return modelosDAO.buscarModelos(nombreModelo);
     }
 //agregar
-     public modelo agregarModelosImpresion(ModelosImpresion nuevoModelo) {
+     public ModelosImpresion agregarModelosImpresion(ModelosImpresion nuevoModelo) {
+         if (nuevoModelo == null) {
+             return null;
+         }
          if (nuevoModelo.getNombreModelo() == null || nuevoModelo.getNombreModelo().trim().isEmpty()) {
-             return new modelo(false, "El nombre no puede estar vacio.");
+             return null;
          }
          if (nuevoModelo.getGramosRequeridos() <= 0) {
-             return new modelo(false, "Insertar los gramos requeridos");
+             return null;
          }
          modelosDAO.guardarModelo(nuevoModelo);
-         return new modelo(true, "Modelo agregado exitosamente");
+         return nuevoModelo;
      }
 
      // modificar
-    public modelo modificarModelo(ModelosImpresion modeloModificado){
-        if (modeloModificado == null || modeloModificado.getIdModelo()==0){
-            return new modelo(false,"El modelo no existe");
-        }
-        modelosDAO.guardarModelo(modeloModificado);
-        return new modelo(true, "Modificacion aplicada correctamente");
-    }
+     public ModelosImpresion modificarModelo(ModelosImpresion modeloModificado){
+         if (modeloModificado == null || modeloModificado.getIdModelo() == 0){
+             return null;
+         }
 
-    public modelo eliminarModelo(int idModelo){
-    if (idModelo <= 0){
-        return new modelo(false, "ID no valido");
-    }
-    modelosDAO.eliminarModelo(idModelo);
-    return new modelo(true,"Modelo eliminado correctamente");
+         modelosDAO.actualizarModelo(modeloModificado);
+         return modeloModificado;
+     }
+
+    public boolean eliminarModelo(int idModelo){
+        if (idModelo <= 0){
+            return false;
+        }
+
+        modelosDAO.eliminarModelo(idModelo);
+        return true;
     }
 }
-
 
 
