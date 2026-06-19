@@ -1,12 +1,30 @@
 package laboratorio.Modelos;
+import jakarta.persistence.Column;
+import jakarta.persistence.*;
+import org.hibernate.annotations.CollectionId;
+
+@Entity
+@Table(name="Modelos_Impresion")
 
 public class ModelosImpresion {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="idModelo")
     private int idModelo;
-    private double tiempoEstimado;
-    private double gramosRequeridos;
+    @Column(name="nombre")
     private String nombreModelo;
-    private int alturaCapa, totalCapas;
+    @Column(name="tiempo_impresion")
+    private double tiempoEstimado;
+    @Column(name="gramos_requeridos")
+    private double gramosRequeridos;
+    @Column (name="altura_capa")
+    private int alturaCapa;
+    @Column(name= "total_Capas")
+    private int totalCapas;
+    @Column (name="velocidad_impresion")
     private Double velocidadImpresion = 40.0;
+
+    public ModelosImpresion() {}
 
     public double getTiempoEstimado() { return tiempoEstimado; }
     public double getGramosRequeridos() { return gramosRequeridos; }
@@ -57,5 +75,9 @@ public class ModelosImpresion {
         totalCapas = 1;
         gramosRequeridos = 30.0;
         tiempoEstimado = (alturaCapa * totalCapas) / velocidadImpresion;
+    }
+
+    public int getIdModelo() {
+        return idModelo;
     }
 }

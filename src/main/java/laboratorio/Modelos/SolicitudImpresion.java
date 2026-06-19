@@ -1,5 +1,4 @@
 package laboratorio.Modelos;
-import laboratorio.Modelos.SolicitudImpresion;
 import jakarta.persistence.*;
 
 @Entity
@@ -7,49 +6,66 @@ import jakarta.persistence.*;
 public class SolicitudImpresion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idSolicitud;
 
-    private String nombreArchivo, titularSolicitud, rol, correo, modelo;
-    private int idImpresion, idImpresora, dni, capas;
+    @Column(name="nombre_Archivo")
+    private String nombreArchivo;
+    @Column(name="modelo")
+    private String modelo;
+    @Column(name="id_impresora")
+    private int idImpresora;
+    @Column(name="capas")
+    private int capas;
+    @Column(name="tiempo_estimado")
+    private double tiempoEstimado;
+    @Column(name="gramos_requeridos")
+    private double gramosRequeridos;
+    @Column(name="fecha")
     private String fechaSolicitud;
-    private double tiempoEstimado, gramosRequeridos;
-    private static int contadorImpresion = 1;
 
     @ManyToOne (fetch = FetchType.LAZY)//carga el usuario solo si lo necesita
     @JoinColumn(name="idUsuario")
     private Usuario usuario;
 
+    public SolicitudImpresion() {}
+
     public SolicitudImpresion(String nombreArchivo, double tiempoEstimado, double gramosRequeridos, Usuario usuario, ModelosImpresion modelos) {
+        this.usuario = usuario;
         this.nombreArchivo = nombreArchivo;
         this.tiempoEstimado = tiempoEstimado;
         this.gramosRequeridos = gramosRequeridos;
-        this.titularSolicitud = usuario.getNombre();
-        this.rol = usuario.getRol();
-        this.dni = usuario.getDni();
-        this.correo = usuario.getCorreo();
-        this.idImpresion = contadorImpresion++;
         this.fechaSolicitud = java.time.LocalDate.now().toString();
         this.capas = modelos.getTotalCapas();
         this.modelo = modelos.getNombreModelo();
     }
 
+    public Long getIdSolicitud() { return idSolicitud; }
+
     public Usuario getUsuario() {return usuario;}
     public void setUsuario(Usuario usuario) {this.usuario = usuario;}
 
+    public String getTitularSolicitud(){
+        return (usuario != null) ? usuario.getNombre() : "Sin asignar";
+    }
+
+    public int getDni(){
+        return (usuario != null) ? usuario.getDni() : 0;
+    }
+
+    public String getRol() {
+        return (usuario != null) ? usuario.getRol() : "Sin asignar";
+    }
+
+    public String getCorreo() {
+        return (usuario != null) ? usuario.getCorreo() : "Sin asignar";
+    }
 
     public String getNombreArchivo() { return nombreArchivo; }
     public void setNombreArchivo(String nombreArchivo) { this.nombreArchivo = nombreArchivo; }
 
-    public String getTitularSolicitud() { return titularSolicitud; }
-    public void setTitularSolicitud(String titularSolicitud) { this.titularSolicitud = titularSolicitud; }
-
-    public int getIdImpresion() { return idImpresion; }
-
     public int getIdImpresora() { return idImpresora; }
     public void setIdImpresora(int idImpresora) { this.idImpresora = idImpresora; }
 
-    public int getDni() { return dni; }
-    public String getRol() { return rol; }
-    public String getCorreo() { return correo; }
     public String getFechaSolicitud() { return fechaSolicitud; }
 
     public double getGramosRequeridos() { return gramosRequeridos; }

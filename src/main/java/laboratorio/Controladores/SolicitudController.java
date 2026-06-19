@@ -3,8 +3,13 @@ package laboratorio.Controladores;
 import laboratorio.Modelos.ModelosImpresion;
 import laboratorio.Modelos.SolicitudImpresion;
 import laboratorio.Modelos.Usuario;
+import laboratorio.Persistencia.SolicitudImpresionDAO;
+
+
 
 public class SolicitudController {
+    private final ModelosImpresionController modelosController = new ModelosImpresionController();
+    private final SolicitudImpresionDAO solicitudImpresionDAO = new SolicitudImpresionDAO();
 
     /**
      * Crea una SolicitudImpresion a partir de un nombre de modelo y un usuario.
@@ -16,10 +21,8 @@ public class SolicitudController {
      * El resultado incluye el motivo del fallo mediante ResultadoSolicitud.
      */
     public ResultadoSolicitud crearSolicitud(String nombreModelo, Usuario usuario) {
-        ModelosImpresion modelo = new ModelosImpresion();
-        boolean existe = modelo.seleccionarModelo(nombreModelo);
-
-        if (!existe) {
+        ModelosImpresion modelo = modelosController.obtenerModelosImpresion(nombreModelo);
+        if (modelo == null) {
             return new ResultadoSolicitud(null, "Modelo no encontrado: " + nombreModelo);
         }
 
@@ -37,6 +40,12 @@ public class SolicitudController {
                 usuario,
                 modelo
                 );
+
+        try {
+            solicitudImpresionDAO.guardar(solicitud);
+        } catch (Exception e) {
+            return new ResultadoSolicitud(null, "Error al guardar en la base de datos: " + e.getMessage());
+        }
 
         return new ResultadoSolicitud(solicitud, null);
     }
