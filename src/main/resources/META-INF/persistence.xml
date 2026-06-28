@@ -8,6 +8,8 @@
         <class>laboratorio.Modelos.Bobina</class>
         <class>laboratorio.Modelos.Impresora</class>
         <class>laboratorio.Modelos.Registro</class>
+        <class>laboratorio.Modelos.Solicitud</class>
+        <class>laboratorio.Modelos.SolicitudCorte</class>
         <class>laboratorio.Modelos.SolicitudImpresion</class>
         <class>laboratorio.Modelos.ModelosImpresion</class>
         <class>laboratorio.Modelos.Administrador</class>
