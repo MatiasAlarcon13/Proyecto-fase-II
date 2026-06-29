@@ -3,46 +3,45 @@ package laboratorio.Persistencia;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import laboratorio.Modelos.Solicitud;
-import laboratorio.Modelos.SolicitudImpresion;
+import laboratorio.Modelos.SolicitudCorte;
 
 import java.util.Collections;
 import java.util.List;
 
-public class SolicitudImpresionDAO {
-    public void guardar(SolicitudImpresion solicitudImpresion) {
+public class SolicitudCorteDAO {
+
+    public void guardar(SolicitudCorte solicitudCorte) {
         EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         try {
             entityManager.getTransaction().begin();
-            entityManager.persist(solicitudImpresion);
+            entityManager.persist(solicitudCorte);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
-            if  (entityManager.getTransaction().isActive()) {
+            if (entityManager.getTransaction().isActive()) {
                 entityManager.getTransaction().rollback();
             }
             throw e;
-        }finally {
-            if (entityManager!= null && entityManager.isOpen()) {
+        } finally {
+            if (entityManager != null && entityManager.isOpen()) {
                 entityManager.close();
             }
         }
-
     }
 
-
-    public SolicitudImpresion buscarSolicitudImpresion(int idSolicitud) {
-        SolicitudImpresion solicitudImpresion = null;
+    public SolicitudCorte buscarSolicitudCorte(int idSolicitud) {
+        SolicitudCorte solicitudCorte = null;
         EntityManager entityManager = null;
 
         try {
             entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
-            String jpql = "SELECT s FROM SolicitudImpresion s " +
+            String jpql = "SELECT s FROM SolicitudCorte s " +
                     "JOIN FETCH s.usuario " +
                     "WHERE s.idSolicitud = :idSolicitud";
-            solicitudImpresion = entityManager.createQuery(jpql, SolicitudImpresion.class)
+            solicitudCorte = entityManager.createQuery(jpql, SolicitudCorte.class)
                     .setParameter("idSolicitud", idSolicitud)
                     .getSingleResult();
         } catch (NoResultException e) {
-            System.out.println("No se encontró la solicitud con ID: " + idSolicitud);
+            System.out.println("No se encontró la solicitud de corte con ID: " + idSolicitud);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -50,18 +49,18 @@ public class SolicitudImpresionDAO {
                 entityManager.close();
             }
         }
-        return solicitudImpresion;
+        return solicitudCorte;
     }
 
-    public List<SolicitudImpresion> listarPendientes() {
+    public List<SolicitudCorte> listarPendientes() {
         EntityManager entityManager = null;
         try {
             entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
-            String jpql = "SELECT s FROM SolicitudImpresion s " +
+            String jpql = "SELECT s FROM SolicitudCorte s " +
                     "JOIN FETCH s.usuario " +
                     "WHERE s.estado = :estado " +
                     "ORDER BY s.fechaSolicitud ASC";
-            return entityManager.createQuery(jpql, SolicitudImpresion.class)
+            return entityManager.createQuery(jpql, SolicitudCorte.class)
                     .setParameter("estado", Solicitud.EstadoSolicitud.PENDIENTE)
                     .getResultList();
         } catch (Exception e) {
@@ -74,11 +73,11 @@ public class SolicitudImpresionDAO {
         }
     }
 
-    public void actualizar(SolicitudImpresion solicitudImpresion) {
+    public void actualizar(SolicitudCorte solicitudCorte) {
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
         try {
             em.getTransaction().begin();
-            em.merge(solicitudImpresion);
+            em.merge(solicitudCorte);
             em.getTransaction().commit();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) em.getTransaction().rollback();
@@ -88,19 +87,18 @@ public class SolicitudImpresionDAO {
         }
     }
 
-    //eliminar
     public void eliminar(int idSolicitud) {
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
         try {
             em.getTransaction().begin();
-            SolicitudImpresion solicitudImpresion = em.find(SolicitudImpresion.class, idSolicitud);
+            SolicitudCorte solicitudCorte = em.find(SolicitudCorte.class, idSolicitud);
 
-            if (solicitudImpresion != null) {
-                em.remove(solicitudImpresion);
+            if (solicitudCorte != null) {
+                em.remove(solicitudCorte);
                 em.getTransaction().commit();
-                System.out.println("Solicitud eliminada correctamente.");
+                System.out.println("Solicitud de corte eliminada correctamente.");
             } else {
-                System.out.println("No se puede eliminar: No existe la solicitud con ID " + idSolicitud);
+                System.out.println("No se puede eliminar: No existe la solicitud de corte con ID " + idSolicitud);
             }
         } catch (Exception e) {
             if (em.getTransaction().isActive()) em.getTransaction().rollback();
