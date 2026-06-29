@@ -2,12 +2,13 @@ package laboratorio.Controladores;
 
 import laboratorio.Modelos.Bobina;
 import laboratorio.Modelos.Impresora;
+import laboratorio.Modelos.Maquina;
 import laboratorio.Modelos.SolicitudImpresion;
 
 public class ImpresoraController {
 
     public Impresora crearImpresora(String modelo, String marca) {
-        return new Impresora(modelo, marca);
+        return new Impresora();
     }
 
     /**

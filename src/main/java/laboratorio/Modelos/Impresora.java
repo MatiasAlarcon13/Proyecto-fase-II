@@ -4,19 +4,9 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Impresora")
-public class Impresora {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idImpresora")
-    private int idImpresora;
-
-    @Column(name = "modelo", nullable = false)
-    private String modelo;
-
-    @Column(name = "marca", nullable = false)
-    private String marca;
-
+@PrimaryKeyJoinColumn(name = "idMaquina")
+@DiscriminatorValue("Impresora")
+public class Impresora extends Maquina {
     @Enumerated(EnumType.STRING)
     @Column(name = "estado", nullable = false)
     private EstadoImpresora estado;
@@ -38,35 +28,19 @@ public class Impresora {
         this.estado = EstadoImpresora.LIBRE;
     }
 
+    @Override
+    public Double consumirRecurso() {
+        return 0.0;
+    }
+
     // ─── Constructor de uso normal ────────────────────────────────────────────
-    public Impresora(String modelo, String marca) {
+   /* public Impresora(String modelo, String marca) {
         this.modelo = modelo;
         this.marca  = marca;
         this.estado = EstadoImpresora.LIBRE;
-    }
+    }*/
 
-
-    public boolean estaDisponible()      { return estado == EstadoImpresora.LIBRE; }
-    public boolean estaEnMantenimiento() { return estado == EstadoImpresora.EN_MANTENIMIENTO; }
     public boolean estaImprimiendo()     { return estado == EstadoImpresora.IMPRIMIENDO; }
-
-    /**
-     * Pone en mantenimiento. Retorna false si está imprimiendo.
-     */
-    public boolean ponerEnMantenimiento() {
-        if (estado == EstadoImpresora.IMPRIMIENDO) return false;
-        estado = EstadoImpresora.EN_MANTENIMIENTO;
-        return true;
-    }
-
-    /**
-     * Libera del mantenimiento. Retorna false si no estaba en mantenimiento.
-     */
-    public boolean liberarMantenimiento() {
-        if (estado != EstadoImpresora.EN_MANTENIMIENTO) return false;
-        estado = EstadoImpresora.LIBRE;
-        return true;
-    }
 
     /**
      * Inicia impresión. Retorna false si no puede iniciar.
@@ -77,11 +51,18 @@ public class Impresora {
         if (!bobina.tieneMaterial(solicitud))      return false;
 
         bobina.descontarMaterial(solicitud);
-        solicitud.setIdImpresora(this.idImpresora);
+        solicitud.setIdMaquina(Integer.parseInt(this.idMaquina));
         this.estado          = EstadoImpresora.IMPRIMIENDO;
         this.bobinaActual    = bobina;
         this.solicitudActual = solicitud;
         return true;
+    }
+    public boolean liberar() {
+       if( liberarMantenimiento()) {
+           return true;
+       }else {
+           return false;
+       }
     }
 
     /**
@@ -97,12 +78,12 @@ public class Impresora {
 
     // ─── Getters y Setters ────────────────────────────────────────────────────
 
-    public int getIdImpresora()                     { return idImpresora; }
+/*    public int getIdImpresora()                     { return idImpresora; }
     public String getModelo()                       { return modelo; }
     public void setModelo(String modelo)            { this.modelo = modelo; }
     public String getMarca()                        { return marca; }
     public void setMarca(String marca)              { this.marca = marca; }
-    public EstadoImpresora getEstado()              { return estado; }
+  */  public EstadoImpresora getEstado()              { return estado; }
     public void setEstado(EstadoImpresora estado)   { this.estado = estado; }
     public Bobina getBobinaActual()                 { return bobinaActual; }
     public SolicitudImpresion getSolicitudActual()  { return solicitudActual; }

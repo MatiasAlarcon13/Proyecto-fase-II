@@ -12,8 +12,8 @@ public class SolicitudImpresion {
     private String nombreArchivo;
     @Column(name="modelo")
     private String modelo;
-    @Column(name="id_impresora")
-    private int idImpresora;
+    @Column(name="id_maquina")
+    private int idMaquina;
     @Column(name="capas")
     private int capas;
     @Column(name="tiempo_estimado")
@@ -63,8 +63,8 @@ public class SolicitudImpresion {
     public String getNombreArchivo() { return nombreArchivo; }
     public void setNombreArchivo(String nombreArchivo) { this.nombreArchivo = nombreArchivo; }
 
-    public int getIdImpresora() { return idImpresora; }
-    public void setIdImpresora(int idImpresora) { this.idImpresora = idImpresora; }
+    public int getIdMaquina() { return idMaquina; }
+    public void setIdMaquina(int idMaquina) { this.idMaquina = idMaquina; }
 
     public String getFechaSolicitud() { return fechaSolicitud; }
 
