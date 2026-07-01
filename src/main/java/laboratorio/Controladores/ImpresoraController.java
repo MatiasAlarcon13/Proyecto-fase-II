@@ -1,9 +1,6 @@
 package laboratorio.Controladores;
 
-import laboratorio.Modelos.Bobina;
-import laboratorio.Modelos.Impresora;
-import laboratorio.Modelos.Maquina;
-import laboratorio.Modelos.SolicitudImpresion;
+import laboratorio.Modelos.*;
 
 public class ImpresoraController {
 
@@ -52,7 +49,7 @@ public class ImpresoraController {
         return impresora.liberarMantenimiento();
     }
 
-    public Impresora.EstadoImpresora getEstado(Impresora impresora) {
+    public estadoMaquina.EstadoMaquina getEstado(Impresora impresora) {
         return impresora.getEstado();
     }
 }

@@ -13,6 +13,9 @@ public abstract class Solicitud {
     @Column(name = "idSolicitud")
     protected int idSolicitud;
 
+    @Column(name="id_maquina")
+    protected int idMaquina;
+
     @Column(name = "nombre_Archivo")
     protected String nombreArchivo;
 
@@ -52,6 +55,11 @@ public abstract class Solicitud {
     public abstract Solicitud procesarSolicitud();
 
     public int getIdSolicitud() { return idSolicitud; }
+
+    public int getIdMaquina(){return idMaquina;}
+    public int setIdMaquina(int idMaquina) {this.idMaquina = idMaquina;
+        return idMaquina;
+    }
 
     public String getNombreArchivo() { return nombreArchivo; }
     public void setNombreArchivo(String nombreArchivo) { this.nombreArchivo = nombreArchivo; }

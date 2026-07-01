@@ -2,7 +2,7 @@ package laboratorio.Persistencia;
 
 import jakarta.persistence.EntityManager;
 import laboratorio.Modelos.Impresora;
-import laboratorio.Modelos.Impresora.EstadoImpresora;
+import laboratorio.Modelos.estadoMaquina;
 
 import java.util.List;
 
@@ -51,7 +51,7 @@ public class ImpresoraDAO {
         }
     }
 
-    public List<Impresora> buscarPorEstado(EstadoImpresora estado) {
+    public List<Impresora> buscarPorEstado(estadoMaquina estado) {
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
         try {
             return em.createQuery(

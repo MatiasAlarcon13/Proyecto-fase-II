@@ -3,40 +3,33 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name= "Solicitudes_Impresion")
-public class SolicitudImpresion {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idSolicitud;
-
-    @Column(name="nombre_Archivo")
-    private String nombreArchivo;
+public class SolicitudImpresion extends Solicitud {
     @Column(name="modelo")
     private String modelo;
-    @Column(name="id_maquina")
-    private int idMaquina;
     @Column(name="capas")
     private int capas;
     @Column(name="tiempo_estimado")
     private double tiempoEstimado;
     @Column(name="gramos_requeridos")
     private double gramosRequeridos;
-    @Column(name="fecha")
-    private String fechaSolicitud;
 
-    @ManyToOne (fetch = FetchType.LAZY)//carga el usuario solo si lo necesita
-    @JoinColumn(name="idUsuario")
-    private Usuario usuario;
 
     public SolicitudImpresion() {}
 
     public SolicitudImpresion(String nombreArchivo, double tiempoEstimado, double gramosRequeridos, Usuario usuario, ModelosImpresion modelos) {
-        this.usuario = usuario;
-        this.nombreArchivo = nombreArchivo;
+       super(nombreArchivo, usuario);
         this.tiempoEstimado = tiempoEstimado;
         this.gramosRequeridos = gramosRequeridos;
         this.fechaSolicitud = java.time.LocalDate.now().toString();
         this.capas = modelos.getTotalCapas();
         this.modelo = modelos.getNombreModelo();
+    }
+
+    @Override
+    public Solicitud procesarSolicitud() {
+        this.estado = EstadoSolicitud.FINALIZADA;
+        System.out.println("La solicitud de impresión para el modelo " + this.modelo + " ha sido procesada.");
+        return this;
     }
 
     public int getIdSolicitud() { return idSolicitud; }
@@ -62,9 +55,6 @@ public class SolicitudImpresion {
 
     public String getNombreArchivo() { return nombreArchivo; }
     public void setNombreArchivo(String nombreArchivo) { this.nombreArchivo = nombreArchivo; }
-
-    public int getIdMaquina() { return idMaquina; }
-    public void setIdMaquina(int idMaquina) { this.idMaquina = idMaquina; }
 
     public String getFechaSolicitud() { return fechaSolicitud; }
 

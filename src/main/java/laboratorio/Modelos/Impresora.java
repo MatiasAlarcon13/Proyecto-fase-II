@@ -1,16 +1,10 @@
 package laboratorio.Modelos;
-
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Impresora")
 @PrimaryKeyJoinColumn(name = "idMaquina")
-@DiscriminatorValue("Impresora")
 public class Impresora extends Maquina {
-    @Enumerated(EnumType.STRING)
-    @Column(name = "estado", nullable = false)
-    private EstadoImpresora estado;
-
     // Relaciones en memoria (no persistidas): bobinaActual y solicitudActual
     // son estado transitorio de operación, no se guardan en BD.
     @Transient
@@ -19,18 +13,25 @@ public class Impresora extends Maquina {
     @Transient
     private SolicitudImpresion solicitudActual;
 
-
-    public enum EstadoImpresora {
-        LIBRE, IMPRIMIENDO, EN_MANTENIMIENTO
-    }
-
     public Impresora() {
-        this.estado = EstadoImpresora.LIBRE;
+        this.estado = estadoMaquina.EstadoMaquina.LIBRE;
     }
 
     @Override
-    public Double consumirRecurso() {
-        return 0.0;
+    public Double consumirRecurso(Solicitud solicitud) {
+        if (!(solicitud instanceof SolicitudImpresion)) {
+            return 0.0;
+        }
+        SolicitudImpresion solImpresion = (SolicitudImpresion) solicitud;
+
+        if (this.bobinaActual != null) {
+            this.bobinaActual.descontarMaterial(solImpresion);
+        }
+        return solImpresion.getGramosRequeridos();
+    }
+    @Override
+    public void solicitar(Solicitud solicitud) {
+
     }
 
     // ─── Constructor de uso normal ────────────────────────────────────────────
@@ -40,38 +41,34 @@ public class Impresora extends Maquina {
         this.estado = EstadoImpresora.LIBRE;
     }*/
 
-    public boolean estaImprimiendo()     { return estado == EstadoImpresora.IMPRIMIENDO; }
+    public boolean estaImprimiendo() { return estado == estadoMaquina.EstadoMaquina.IMPRIMIENDO; }
 
     /**
      * Inicia impresión. Retorna false si no puede iniciar.
      */
     public boolean iniciarImpresion(SolicitudImpresion solicitud, Bobina bobina) {
-        if (estado != EstadoImpresora.LIBRE)      return false;
-        if (!bobina.mantenimientoBobina())         return false;
-        if (!bobina.tieneMaterial(solicitud))      return false;
+        if (this.estado != estadoMaquina.EstadoMaquina.LIBRE) return false;
+        if (!bobina.mantenimientoBobina()) return false;
+        if (!bobina.tieneMaterial(solicitud)) return false;
 
-        bobina.descontarMaterial(solicitud);
-        solicitud.setIdMaquina(Integer.parseInt(this.idMaquina));
-        this.estado          = EstadoImpresora.IMPRIMIENDO;
-        this.bobinaActual    = bobina;
+        this.bobinaActual = bobina;
         this.solicitudActual = solicitud;
+        this.estado = estadoMaquina.EstadoMaquina.IMPRIMIENDO;
+        this.consumirRecurso(solicitud);
+        solicitud.setIdMaquina(Integer.parseInt(this.idMaquina));
         return true;
     }
     public boolean liberar() {
-       if( liberarMantenimiento()) {
-           return true;
-       }else {
-           return false;
-       }
+        return liberarMantenimiento();
     }
 
     /**
      * Finaliza la impresión en curso. Retorna false si no había impresión activa.
      */
     public boolean finalizarImpresion() {
-        if (estado != EstadoImpresora.IMPRIMIENDO) return false;
-        this.estado          = EstadoImpresora.LIBRE;
-        this.bobinaActual    = null;
+        if (estado != estadoMaquina.EstadoMaquina.IMPRIMIENDO) return false;
+        this.estado = estadoMaquina.EstadoMaquina.LIBRE;
+        this.bobinaActual = null;
         this.solicitudActual = null;
         return true;
     }
@@ -83,8 +80,7 @@ public class Impresora extends Maquina {
     public void setModelo(String modelo)            { this.modelo = modelo; }
     public String getMarca()                        { return marca; }
     public void setMarca(String marca)              { this.marca = marca; }
-  */  public EstadoImpresora getEstado()              { return estado; }
-    public void setEstado(EstadoImpresora estado)   { this.estado = estado; }
+  */
     public Bobina getBobinaActual()                 { return bobinaActual; }
     public SolicitudImpresion getSolicitudActual()  { return solicitudActual; }
 }
