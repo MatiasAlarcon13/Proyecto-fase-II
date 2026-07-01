@@ -78,7 +78,7 @@ classDiagram
 
 ## Arquitectura
 
-El proyecto sigue una arquitectura por capas:
+El proyecto sigue una arquitectura de MVC:
 
 ```
 laboratorio/
