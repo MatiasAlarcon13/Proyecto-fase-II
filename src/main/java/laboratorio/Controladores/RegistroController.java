@@ -5,15 +5,15 @@ import laboratorio.Modelos.Impresora;
 import laboratorio.Modelos.Registro;
 import laboratorio.Modelos.SolicitudImpresion;
 import laboratorio.Modelos.Usuario;
+import laboratorio.Persistencia.RegistroDAO;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 
 public class RegistroController {
 
-    private final List<Registro> registros = new ArrayList<>();
+    private final RegistroDAO registroDAO = new RegistroDAO();
 
     // ─── Creación ─────────────────────────────────────────────────────────────
 
@@ -36,36 +36,19 @@ public class RegistroController {
     // ─── Consultas ────────────────────────────────────────────────────────────
 
     public List<Registro> getRegistros() {
-        return Collections.unmodifiableList(registros);
+        return registroDAO.listarTodos();
     }
 
     public List<Registro> getRegistrosPorUsuario(String dni) {
-        List<Registro> resultado = new ArrayList<>();
-        for (Registro r : registros) {
-            if (r.getDniUsuario().equals(dni)) {
-                resultado.add(r);
-            }
-        }
-        return resultado;
+        return registroDAO.buscarPorUsuario(dni);
     }
 
     public Registro getRegistroPorImpresion(int idImpresion) {
-        for (Registro r : registros) {
-            if (r.getIdImpresion() == idImpresion) {
-                return r;
-            }
-        }
-        return null;
+        return registroDAO.buscarPorImpresion(idImpresion);
     }
 
     public List<Registro> getRegistrosPorBobina(int idBobina) {
-        List<Registro> resultado = new ArrayList<>();
-        for (Registro r : registros) {
-            if (r.getIdBobina() == idBobina) {
-                resultado.add(r);
-            }
-        }
-        return resultado;
+        return registroDAO.buscarPorBobina(idBobina);
     }
 
     private Registro crearYGuardar(SolicitudImpresion solicitud,
@@ -75,7 +58,7 @@ public class RegistroController {
                                    String motivo) {
         Registro r = Registro.generarRegistro(solicitud, impresora, bobina, usuario, motivo);
         if (r != null) {
-            registros.add(r);
+            registroDAO.guardar(r);
         }
         return r; // null indica fallo.
     }

@@ -1,22 +1,25 @@
 package laboratorio.Modelos;
 import jakarta.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "maquinas")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class  Maquina {
+
     @Id
+    @Column(name = "idMaquina")
     protected String idMaquina;
-    protected String marca;
+
     @Enumerated(EnumType.STRING)
     protected estadoMaquina.EstadoMaquina estado;
+    
+    @Column(name = "tipoMaquina")
     protected String tipoMaquina;
 
     public Maquina(){}
 
-    public Maquina(String idMaquina, String marca, estadoMaquina.EstadoMaquina estado, String tipoMaquina){
-        this.idMaquina = idMaquina;
-        this.marca = marca;
+    public Maquina(estadoMaquina.EstadoMaquina estado, String tipoMaquina){
         this.estado = estado;
         this.tipoMaquina = tipoMaquina;
     }
@@ -24,21 +27,16 @@ public abstract class  Maquina {
     public abstract void solicitar(Solicitud solicitud);
 
     public abstract Double consumirRecurso(Solicitud solicitud);
-    //metodos que antes eran de impresora
+
     public boolean estaDisponible()      { return estado == estadoMaquina.EstadoMaquina.LIBRE; }
     public boolean estaEnMantenimiento() { return estado == estadoMaquina.EstadoMaquina.EN_MANTENIMIENTO; }
-    /**
-     * Pone en mantenimiento. Retorna false si está imprimiendo.
-     */
+    
     public boolean ponerEnMantenimiento() {
         if (estado == estadoMaquina.EstadoMaquina.IMPRIMIENDO) return false;
         estado = estadoMaquina.EstadoMaquina.EN_MANTENIMIENTO;
         return true;
     }
 
-    /**
-     * Libera del mantenimiento. Retorna false si no estaba en mantenimiento.
-     */
     public boolean liberarMantenimiento() {
         if (estado != estadoMaquina.EstadoMaquina.EN_MANTENIMIENTO) return false;
         estado = estadoMaquina.EstadoMaquina.LIBRE;
@@ -53,10 +51,6 @@ public abstract class  Maquina {
         this.estado =  estado;
     }
 
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
-
     public void setTipoMaquina(String tipoMaquina) {this.tipoMaquina = tipoMaquina;}
 
     public String getIdMaquina() {
@@ -65,10 +59,6 @@ public abstract class  Maquina {
 
     public estadoMaquina.EstadoMaquina getEstado() {
         return estado;
-    }
-
-    public String getMarca() {
-        return marca;
     }
 
     public String getTipoMaquina() {

@@ -3,6 +3,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name= "Solicitudes_Impresion")
+@DiscriminatorValue("IMPRESION")
 public class SolicitudImpresion extends Solicitud {
     @Column(name="modelo")
     private String modelo;
@@ -12,7 +13,6 @@ public class SolicitudImpresion extends Solicitud {
     private double tiempoEstimado;
     @Column(name="gramos_requeridos")
     private double gramosRequeridos;
-
 
     public SolicitudImpresion() {}
 

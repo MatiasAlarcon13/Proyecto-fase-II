@@ -1,17 +1,54 @@
 package laboratorio.Controladores;
 
-import laboratorio.Modelos.ModelosImpresion;
-import laboratorio.Modelos.Solicitud;
-import laboratorio.Modelos.SolicitudCorte;
-import laboratorio.Modelos.SolicitudImpresion;
-import laboratorio.Modelos.Usuario;
-import laboratorio.Persistencia.SolicitudCorteDAO;
-import laboratorio.Persistencia.SolicitudImpresionDAO;
+
+import laboratorio.Modelos.*;
+import laboratorio.Persistencia.*;
+
+import java.util.List;
 
 public class SolicitudController {
     private final ModelosImpresionController modelosController = new ModelosImpresionController();
     private final SolicitudImpresionDAO solicitudImpresionDAO = new SolicitudImpresionDAO();
     private final SolicitudCorteDAO solicitudCorteDAO = new SolicitudCorteDAO();
+    private final ImpresoraDAO impresoraDAO = new ImpresoraDAO();
+    private final PlanchaDAO planchaDAO = new PlanchaDAO();
+    private final RegistroController registroController = new RegistroController();
+
+    /**
+     * Aprobar solicitud de impresión y asignar impresora.
+     */
+    public ResultadoSolicitud<SolicitudImpresion> aprobarSolicitud(SolicitudImpresion solicitud, Bobina bobina) {
+        if (solicitud.getEstado() != Solicitud.EstadoSolicitud.PENDIENTE) {
+            return new ResultadoSolicitud<>(null, "La solicitud no está en estado PENDIENTE.");
+        }
+
+        List<Impresora> impresorasLibres = impresoraDAO.buscarPorEstado(estadoMaquina.EstadoMaquina.LIBRE);
+        if (impresorasLibres.isEmpty()) {
+            return new ResultadoSolicitud<>(null, "No hay impresoras disponibles.");
+        }
+
+        Impresora impresora = impresorasLibres.get(0);
+        ImpresoraController impresoraController = new ImpresoraController();
+        int resultadoIniciacion = impresoraController.iniciarImpresion(impresora, solicitud, bobina);
+
+        if (resultadoIniciacion == 0) {
+            solicitud.setEstado(Solicitud.EstadoSolicitud.EN_PROCESO);
+            solicitudImpresionDAO.actualizar(solicitud);
+            impresoraDAO.actualizar(impresora);
+            
+            registroController.registrarImpresion(solicitud, impresora, bobina, solicitud.getUsuario());
+            
+            return new ResultadoSolicitud<>(solicitud, null);
+        } else {
+            solicitud.setEstado(Solicitud.EstadoSolicitud.CANCELADA);
+            solicitudImpresionDAO.actualizar(solicitud);
+            
+            String motivoError = "Error al iniciar impresión (Código: " + resultadoIniciacion + ")";
+            registroController.registrarRechazo(solicitud, impresora, bobina, solicitud.getUsuario(), motivoError);
+            
+            return new ResultadoSolicitud<>(null, motivoError);
+        }
+    }
 
     /**
      * Crea una SolicitudImpresion a partir de un nombre de modelo y un usuario.
@@ -35,23 +72,20 @@ public class SolicitudController {
                 "Cuota insuficiente. Disponible: " + usuario.getCuota() + "g | Requerido: " + gramosRequeridos + "g");
         }
 
-        // REVISAR: este método valida que haya cuota suficiente, pero no
-        // descuenta la cuota del usuario (ej. usuario.descontarCuota(gramos)).
-        // Si esa llamada no se hace en otro punto del flujo (al asignar la
-        // Impresora física, por ejemplo), el usuario podría seguir creando
-        // solicitudes sin que su cuota disponible disminuya nunca.
-        // No lo agrego acá sin ver Usuario/Alumno.java para no duplicar el
-        // descuento si ya se hace en otro Controller.
-
+        // Crear solicitud
         SolicitudImpresion solicitud = new SolicitudImpresion(
                 modelo.getNombreModelo(),
-                modelo.getTiempoEstimado(),
+                modelo.gettiempoEstimado(),
                 modelo.getGramosRequeridos(),
                 usuario,
                 modelo
-                );
+        );
 
         try {
+            // Descontar cuota si el usuario es Alumno
+            if (usuario instanceof Alumno) {
+                ((Alumno) usuario).descontarCuota(solicitud);
+            }
             solicitudImpresionDAO.guardar(solicitud);
         } catch (Exception e) {
             return new ResultadoSolicitud<>(null, "Error al guardar en la base de datos: " + e.getMessage());
@@ -73,17 +107,20 @@ public class SolicitudController {
      * Retorna null si los datos del corte son inválidos o falla la persistencia.
      */
     public ResultadoSolicitud<SolicitudCorte> crearSolicitudCorte(String nombreArchivo, String tipoPlancha,
-                                                                    int cantPlanchas, int tiempoTuboLaser,
-                                                                    Usuario usuario) {
+                                                                    int cantPlanchas, Usuario usuario) {
         if (tipoPlancha == null || tipoPlancha.isBlank()) {
             return new ResultadoSolicitud<>(null, "Debe indicar el tipo de plancha.");
         }
         if (cantPlanchas <= 0) {
             return new ResultadoSolicitud<>(null, "La cantidad de planchas debe ser mayor a 0.");
         }
-        if (tiempoTuboLaser <= 0) {
-            return new ResultadoSolicitud<>(null, "El tiempo estimado de tubo láser debe ser mayor a 0.");
+
+        Plancha plancha = planchaDAO.buscarPorTipo(tipoPlancha);
+        if (plancha == null || plancha.getCantidadDisponible() < cantPlanchas) {
+            return new ResultadoSolicitud<>(null, "Stock insuficiente de material: " + tipoPlancha);
         }
+
+        int tiempoTuboLaser = cantPlanchas * 4; // Lógica fija: 4 minutos por plancha
 
         SolicitudCorte solicitud = new SolicitudCorte(
                 nombreArchivo,
@@ -120,6 +157,27 @@ public class SolicitudController {
             return true;
         }
         return false;
+    }
+
+    public List<Solicitud> listarTodasLasSolicitudesPendientes() {
+        List<Solicitud> todas = new java.util.ArrayList<>();
+        todas.addAll(solicitudImpresionDAO.listarPendientes());
+        todas.addAll(solicitudCorteDAO.listarPendientes()); // Necesitaré agregar listarPendientes en SolicitudCorteDAO
+        return todas;
+    }
+
+    public List<SolicitudImpresion> listarSolicitudesAprobadas() {
+        // Asumiendo que Aprobada es EN_PROCESO o similar según la lógica de negocio
+        return solicitudImpresionDAO.listarPendientes().stream() // O crear método en DAO para listar EN_PROCESO
+                .filter(s -> s.getEstado() == Solicitud.EstadoSolicitud.EN_PROCESO)
+                .toList();
+    }
+
+    public List<SolicitudImpresion> listarSolicitudesPorAlumno(int dni) {
+        // Necesitaremos implementar esto en el DAO o filtrar en memoria
+        return solicitudImpresionDAO.listarPendientes().stream() // Simplificación: filtrar en memoria
+                .filter(s -> s.getDni() == dni)
+                .toList();
     }
 
     // --- Clase interna resultado (genérica: sirve para impresión y corte) ---

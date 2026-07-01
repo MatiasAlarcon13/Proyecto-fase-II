@@ -14,7 +14,8 @@ public abstract class Solicitud {
     protected int idSolicitud;
 
     @Column(name="id_maquina")
-    protected int idMaquina;
+    protected String idMaquina;
+
 
     @Column(name = "nombre_Archivo")
     protected String nombreArchivo;
@@ -29,7 +30,7 @@ public abstract class Solicitud {
     @Column(name = "dni")
     protected int dni;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idUsuario")
     protected Usuario usuario;
 
@@ -56,10 +57,8 @@ public abstract class Solicitud {
 
     public int getIdSolicitud() { return idSolicitud; }
 
-    public int getIdMaquina(){return idMaquina;}
-    public int setIdMaquina(int idMaquina) {this.idMaquina = idMaquina;
-        return idMaquina;
-    }
+    public String getIdMaquina(){return idMaquina;}
+    public void setIdMaquina(String idMaquina) {this.idMaquina = idMaquina;}
 
     public String getNombreArchivo() { return nombreArchivo; }
     public void setNombreArchivo(String nombreArchivo) { this.nombreArchivo = nombreArchivo; }

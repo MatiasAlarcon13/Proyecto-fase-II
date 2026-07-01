@@ -12,7 +12,7 @@ public class UsuarioDAO {
         em.close();//cierra la conexion
     }
 
-    public Usuario verificarCredenciales(String dniIngresado, String passwordIngresada) {
+    public static Usuario verificarCredenciales(String dniIngresado, String passwordIngresada) {
         if (!dniIngresado.equals(passwordIngresada)) {
             return null;
         }

@@ -83,4 +83,5 @@ public class ModelosImpresion {
     public void setIdModelo(int idModelo) {
         this.idModelo = idModelo;
     }
+    public double gettiempoEstimado(){ return tiempoEstimado; }
 }

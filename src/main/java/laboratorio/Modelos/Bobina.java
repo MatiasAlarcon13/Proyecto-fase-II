@@ -22,10 +22,9 @@ public class Bobina {
 
     public Bobina() {}
 
-    // ─── Constructor de uso normal ────────────────────────────────────────────
-    public Bobina(String material, String color, Double gramos) {
+    public Bobina(String material, Double gramos) {
         this.material = material;
-        this.color = color;
+        this.color = "Negro";
         setGramos(gramos);
     }
 

@@ -19,7 +19,7 @@ public class ImpresoraController {
      */
     public int iniciarImpresion(Impresora impresora, SolicitudImpresion solicitud, Bobina bobina) {
         if (impresora.estaEnMantenimiento()) return 1;
-        if (impresora.estaImprimiendo())     return 2;
+        if (!impresora.estaDisponible())     return 2;
         if (!bobina.mantenimientoBobina())   return 3;
         if (!bobina.tieneMaterial(solicitud)) return 4;
 

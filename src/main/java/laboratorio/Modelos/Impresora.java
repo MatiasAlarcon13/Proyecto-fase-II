@@ -1,4 +1,5 @@
 package laboratorio.Modelos;
+import laboratorio.Modelos.Maquina;
 import jakarta.persistence.*;
 
 @Entity
@@ -14,7 +15,7 @@ public class Impresora extends Maquina {
     private SolicitudImpresion solicitudActual;
 
     public Impresora() {
-        this.estado = estadoMaquina.EstadoMaquina.LIBRE;
+        super(estadoMaquina.EstadoMaquina.LIBRE, "Impresora");
     }
 
     @Override
@@ -39,7 +40,7 @@ public class Impresora extends Maquina {
         this.modelo = modelo;
         this.marca  = marca;
         this.estado = EstadoImpresora.LIBRE;
-    }*/
+
 
     public boolean estaImprimiendo() { return estado == estadoMaquina.EstadoMaquina.IMPRIMIENDO; }
 
@@ -55,8 +56,12 @@ public class Impresora extends Maquina {
         this.solicitudActual = solicitud;
         this.estado = estadoMaquina.EstadoMaquina.IMPRIMIENDO;
         this.consumirRecurso(solicitud);
-        solicitud.setIdMaquina(Integer.parseInt(this.idMaquina));
+        solicitud.setIdMaquina(this.idMaquina);
         return true;
+    }
+    
+    public String getIdImpresora() {
+        return getIdMaquina();
     }
     public boolean liberar() {
         return liberarMantenimiento();

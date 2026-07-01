@@ -26,7 +26,7 @@ public class ImpresoraDAO {
 
     // ─── READ ─────────────────────────────────────────────────────────────────
 
-    public Impresora buscarPorId(int idImpresora) {
+    public Impresora buscarPorId(String idImpresora) {
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
         try {
             return em.find(Impresora.class, idImpresora);
@@ -51,7 +51,7 @@ public class ImpresoraDAO {
         }
     }
 
-    public List<Impresora> buscarPorEstado(estadoMaquina estado) {
+    public List<Impresora> buscarPorEstado(estadoMaquina.EstadoMaquina estado) {
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
         try {
             return em.createQuery(
@@ -84,7 +84,7 @@ public class ImpresoraDAO {
 
     // ─── DELETE ───────────────────────────────────────────────────────────────
 
-    public void eliminar(int idImpresora) {
+    public void eliminar(String idImpresora) {
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
         try {
             em.getTransaction().begin();

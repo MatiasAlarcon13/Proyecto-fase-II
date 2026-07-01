@@ -26,7 +26,7 @@ public class Registro {
     private String dniUsuario;
 
     @Column(nullable = false)
-    private int idImpresora;
+    private String idImpresora;
 
     @Column(nullable = false)
     private int idImpresion;
@@ -71,14 +71,14 @@ public class Registro {
     public String getFechaHora()   { return fechaHora;   }
     public String getMotivo()      { return motivo;      }
     public String getDniUsuario()  { return dniUsuario;  }
-    public int    getIdImpresora() { return idImpresora; }
+    public String    getIdImpresora() { return idImpresora; }
     public int    getIdImpresion() { return idImpresion; }
     public int    getIdBobina()    { return idBobina;    }
 
     @Override
     public String toString() {
         return String.format(
-                "[Registro #%d | %s] DNI: %s | Impresora: %d | Impresión: %d | Bobina: %d | Motivo: %s",
+                "[Registro #%d | %s] DNI: %s | Impresora: %s | Impresión: %d | Bobina: %d | Motivo: %s",
                 idRegistro, fechaHora, dniUsuario, idImpresora, idImpresion, idBobina, motivo
         );
     }
