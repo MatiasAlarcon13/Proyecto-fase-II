@@ -1,71 +1,67 @@
 package laboratorio.Persistencia;
 
 import jakarta.persistence.EntityManager;
-import laboratorio.Modelos.Bobina;
+import laboratorio.Modelos.CortadoraLaser;
 import java.util.List;
 
-public class BobinaDAO {
+public class CortadoraLaserDAO {
 
-    public void guardar(Bobina bobina) {
+    public void guardar(CortadoraLaser cortadora) {
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
         try {
             em.getTransaction().begin();
-            em.persist(bobina);
+            em.persist(cortadora);
             em.getTransaction().commit();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) em.getTransaction().rollback();
-            throw new RuntimeException("Error al guardar la bobina", e);
+            throw new RuntimeException("Error al guardar la cortadora", e);
         } finally {
             em.close();
         }
     }
 
-    public Bobina buscarPorId(int idBobina) {
+    public CortadoraLaser buscarPorId(String id) {
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
         try {
-            return em.find(Bobina.class, idBobina);
+            return em.find(CortadoraLaser.class, id);
         } finally {
             em.close();
         }
     }
 
-    // Nuevo método para encontrar bobina automáticamente
-    public Bobina buscarBobinaConMaterial() {
-        EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
-        try {
-            // Buscamos la primera que tenga gramos > 20 (según método mantenimientoBobina)
-            return em.createQuery("SELECT b FROM Bobina b WHERE b.gramos > 20 ORDER BY b.gramos DESC", Bobina.class)
-                     .setMaxResults(1)
-                     .getResultList()
-                     .stream()
-                     .findFirst()
-                     .orElse(null);
-        } catch (Exception e) {
-            return null;
-        } finally {
-            em.close();
-        }
-    }
-
-    public List<Bobina> listarTodas() {
-        EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
-        try {
-            return em.createQuery("SELECT b FROM Bobina b", Bobina.class)
-                     .getResultList();
-        } finally {
-            em.close();
-        }
-    }
-
-    public void actualizar(Bobina bobina) {
+    public void actualizar(CortadoraLaser cortadora) {
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
         try {
             em.getTransaction().begin();
-            em.merge(bobina);
+            em.merge(cortadora);
             em.getTransaction().commit();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) em.getTransaction().rollback();
-            throw new RuntimeException("Error al actualizar la bobina", e);
+            throw new RuntimeException("Error al actualizar la cortadora", e);
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<CortadoraLaser> listarTodas() {
+        EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
+        try {
+            return em.createQuery("SELECT c FROM CortadoraLaser c", CortadoraLaser.class).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public void eliminar(String id) {
+        EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
+        try {
+            em.getTransaction().begin();
+            CortadoraLaser c = em.find(CortadoraLaser.class, id);
+            if (c != null) em.remove(c);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) em.getTransaction().rollback();
+            throw e;
         } finally {
             em.close();
         }

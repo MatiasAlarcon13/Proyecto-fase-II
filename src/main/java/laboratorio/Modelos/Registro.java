@@ -43,6 +43,25 @@ public class Registro {
     private static final DateTimeFormatter FORMATTER =
             DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
+    public static Registro generarRegistroCorte(SolicitudCorte solicitud,
+                                              CortadoraLaser cortadora,
+                                              Usuario usuario,
+                                              String motivo) {
+        if (solicitud == null || cortadora == null || usuario == null || motivo == null || motivo.isBlank()) {
+            return null;
+        }
+
+        Registro r = new Registro();
+        r.fechaHora   = LocalDateTime.now().format(FORMATTER);
+        r.motivo      = motivo.trim();
+        r.dniUsuario  = String.valueOf(usuario.getDni());
+        r.idImpresora = cortadora.getIdMaquina(); // Reutilizamos el campo para cortadora
+        r.idImpresion = solicitud.getIdSolicitud(); // Reutilizamos el campo para ID de Solicitud de Corte
+        r.idBobina    = 0; // No aplica para corte
+
+        return r;
+    }
+
     public static Registro generarRegistro(SolicitudImpresion solicitud,
                                            Impresora impresora,
                                            Bobina bobina,
@@ -54,7 +73,6 @@ public class Registro {
         }
 
         Registro r = new Registro();
-        // idRegistro lo asigna MySQL al persistir — no se toca acá
         r.fechaHora   = LocalDateTime.now().format(FORMATTER);
         r.motivo      = motivo.trim();
         r.dniUsuario  = String.valueOf(usuario.getDni());

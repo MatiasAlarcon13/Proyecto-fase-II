@@ -35,15 +35,6 @@ public class Impresora extends Maquina {
 
     }
 
-    // ─── Constructor de uso normal ────────────────────────────────────────────
-   /* public Impresora(String modelo, String marca) {
-        this.modelo = modelo;
-        this.marca  = marca;
-        this.estado = EstadoImpresora.LIBRE;
-
-
-    public boolean estaImprimiendo() { return estado == estadoMaquina.EstadoMaquina.IMPRIMIENDO; }
-
     /**
      * Inicia impresión. Retorna false si no puede iniciar.
      */
@@ -80,12 +71,6 @@ public class Impresora extends Maquina {
 
     // ─── Getters y Setters ────────────────────────────────────────────────────
 
-/*    public int getIdImpresora()                     { return idImpresora; }
-    public String getModelo()                       { return modelo; }
-    public void setModelo(String modelo)            { this.modelo = modelo; }
-    public String getMarca()                        { return marca; }
-    public void setMarca(String marca)              { this.marca = marca; }
-  */
     public Bobina getBobinaActual()                 { return bobinaActual; }
     public SolicitudImpresion getSolicitudActual()  { return solicitudActual; }
 }

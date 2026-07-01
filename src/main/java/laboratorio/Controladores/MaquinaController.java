@@ -12,6 +12,7 @@ public class MaquinaController {
         String id = UUID.randomUUID().toString().substring(0, 8);
         Impresora i = new Impresora();
         i.setIdMaquina(id);
+        i.setEstado(estadoMaquina.EstadoMaquina.LIBRE); // Fuerza LIBRE
         impresoraDAO.guardar(i);
         System.out.println("Impresora creada con ID: " + id);
     }
@@ -20,6 +21,7 @@ public class MaquinaController {
         String id = UUID.randomUUID().toString().substring(0, 8);
         CortadoraLaser c = new CortadoraLaser();
         c.setIdMaquina(id);
+        c.setEstado(estadoMaquina.EstadoMaquina.LIBRE); // Fuerza LIBRE
         cortadoraDAO.guardar(c);
         System.out.println("Cortadora creada con ID: " + id);
     }
@@ -36,4 +38,3 @@ public class MaquinaController {
         return impresora.getEstado();
     }
 }
-
